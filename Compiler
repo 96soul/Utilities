@@ -1,36 +1,48 @@
+_G.Thailand = true
+
+repeat 
+	task.wait()
+until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer
+
+if game.CoreGui:FindFirstChild('lnwza') then
+	game.CoreGui:FindFirstChild('lnwza'):Destroy()
+end
+
 syn = syn or {};
 local Env: SharedTable = getgenv() or getfenv()
 local Configs: SharedTable = {} or { ... };
 local Net: SharedTable = {} Net.__index = Net;
-local C: SharedTable = {} or { ... };
+local Funcs: SharedTable = {} or { ... };
 local META = setmetatable({}, {__index = function(_, key) return game:GetService(key)end})
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
 local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor()))
 local GG: SharedTable = loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Library/refs/heads/main/%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%84%E0%B8%A3', true))()
-local Window: SharedTable = GG.new(128185233852701, Enum.KeyCode.F1)
+local Window: SharedTable = GG.new(117021263828435, Enum.KeyCode.F1)
 request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
 
-translate = function(en: string, th: string)
-	if _G.Thailand then
-		return tostring(th)
-	else
-		return tostring(en)
-	end
-end
-
 do
-	Net.import = function(Name: string, Callback: func)
-		C[Name] = (Callback or function() return end)
+	translate = function(en: string, th: string)
+		if _G.Thailand then
+			return tostring(th)
+		else
+			return tostring(en)
+		end
 	end
 
-	Net.loop = function(delay: number, Callback: func)
-		return task.spawn(function()
-			while task.wait((delay or 0.1)) do
-				if type(Callback) == 'string' and C[Callback] == 'function' then
-					pcall(C[Callback])
-				elseif type(Callback) == 'function' then
-					pcall(Callback)
-				end
+	Net.loop = function(Value, interval, func, customFunc)
+		while Value do local startTick = tick()
+			if func then pcall(func)  end
+			if customFunc and customFunc() then break end
+			repeat
+				RunService.Heartbeat:Wait()
+			until tick() - startTick >= (interval or 0.1) 
+		end
+	end
+	
+	Net.again = function(f)
+		task.spawn(function()
+			while task.wait(0.1) do
+				pcall(f)
 			end
 		end)
 	end
@@ -206,7 +218,6 @@ do
 	Net.tween = function(target: CFrame, s: number)
 		local speed = s or 1
 		while not _G['StopTween'] do task.wait()
-
 			for _, v in pairs(Character:GetDescendants()) do
 				if v:IsA("BasePart") then v.CanCollide = false end
 			end
@@ -226,7 +237,7 @@ do
 			local SpeedX = math.abs(Dift.X) < Sx and Dift.X or Sx
 			local SpeedZ = math.abs(Dift.Z) < Sz and Dift.Z or Sz
 
-			if Dift.Magnitude <= 0.1 then break end
+			if Dift.Magnitude <= 0.1 or (target.Position - HumanoidRootPart.Position).Magnitude < 5 then break end
 
 			if tonumber(Sx) < (speed or 4) or tonumber(Sx) > (speed or 4) then Sx = speed end
 			if tonumber(Sz) < (speed or 4) or tonumber(Sz) > (speed or 4) then Sz = speed end
@@ -234,12 +245,11 @@ do
 			HumanoidRootPart.CFrame = CFrame.new(HumanoidRootPart.CFrame.X, target.Y, HumanoidRootPart.CFrame.Z)
 			HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + Vector3.new(math.abs(SpeedZ) < (Percent) and SpeedX or SpeedX/1.5, 0, math.abs(SpeedX) < (Percent) and SpeedZ or SpeedZ/1.5)			
 		end
-
 		HumanoidRootPart:PivotTo(target)
 	end
 
-	Net.untween = function()
-		if HumanoidRootPart then
+	Net.stoptw = function(v)
+		if not v then 
 			Net.tween(HumanoidRootPart.CFrame)
 			wait()
 			if HumanoidRootPart:FindFirstChild("BodyVelocity") then
@@ -365,6 +375,16 @@ do
 		end
 	end
 
+	Net.load = function()
+		local base = "Fetching'Script/Config/" .. PlayerId
+		local path = base .. "/" .. PlaceId .. ".json"
+		if not isfolder("Fetching'Script") then makefolder("Fetching'Script") end
+		if not isfolder("Fetching'Script/Config") then makefolder("Fetching'Script/Config") end
+		if not isfolder(base) then makefolder(base) end
+		if not isfile(path) then Net:save() end
+		return HttpService:JSONDecode(readfile(path))
+	end
+
 	Net.include = function(studio: syn)
 		if type(studio) == 'string' then
 			LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
@@ -372,17 +392,12 @@ do
 				Humanoid = Character:WaitForChild('Humanoid');
 				HumanoidRootPart = Character:WaitForChild('HumanoidRootPart');
 				Backpack = LocalPlayer:WaitForChild("Backpack");
+				Character:WaitForChild('Humanoid').WalkSpeed = Configs['WalkSpeed']
 			end)LocalPlayer.Idled:Connect(function()
 				VirtualUser:CaptureController();
 				VirtualUser:ClickButton2(Vector2.new());
 			end)
-			local base = "Fetching'Script/Config/" .. PlayerId
-			local path = base .. "/" .. PlaceId .. ".json"
-			if not isfolder("Fetching'Script") then makefolder("Fetching'Script") end
-			if not isfolder("Fetching'Script/Config") then makefolder("Fetching'Script/Config") end
-			if not isfolder(base) then makefolder(base) end
-			if not isfile(path) then Net:save() end
-			return HttpService:JSONDecode(readfile(path)) or {}
+			print("Start: " .. studio)
 		else
 			while true do end
 		end
@@ -448,123 +463,209 @@ do
 		end
 	end
 
-	Net.components = function()
-		local UI: SharedTable = {}
-		
-		do
-			function UI:Toggle(sec: SharedTable, v: string, val: boolean | string, call: func)
-				return sec:Toggle(v, Configs[val], function(n)
-					Configs[val] = n
-					Net.save(val, n)
-					if not n then
-						Net.untween()
-					end
-					if call and call ~= nil then
-						call(n)
+	Configs = Net.load()
+	Net.safecaller()
+
+	Net.Toggle = function(Tab, Title, SettingName, CallBack)
+		local tasks;
+		return Tab:Toggle(Title, Configs[SettingName], function(val)
+			Configs[SettingName] = val
+			Net.save(SettingName, Configs[SettingName] or val)
+			if val then
+				tasks = task.spawn(function()
+					if Funcs[SettingName] then
+						Funcs[SettingName](Configs[SettingName])
 					end
 				end)
+			elseif not val and tasks then 
+				Net.stoptw(val)
+				task.cancel(tasks)
 			end
-
-			function UI:Dropdown(sec: SharedTable, v: string, Multi: boolean, l: SharedTable, val: boolean | string, call: func)
-				return sec:Dropdown({Title = v,Multi = Multi or false,List = l or {},Value = Configs[val],Callback = function(n)
-					Configs[val] = n
-					Net.save(val, n)
-					if call and call ~= nil then
-						call(n)
-					end
-				end})
+			if CallBack ~= nil then
+				CallBack(val)
 			end
-
-			function UI:Textbox(sec: SharedTable, v: string, clear: boolean, call: func)
-				return sec:Textbox({Value = Configs[v], ClearOnFocus = clear, Callback = function(n)
-					Configs[v] = n
-					Net.save(v, n)
-					if call and call ~= nil then
-						call(n)
-					end
-				end})
-			end
-
-			function UI:Slider(sec: SharedTable, v: string, min: number, max: number, val: number | string, r: number,  call: func)
-				return sec:Slider({Title = v,Min = min or 1,Max = max or 100,Value = Configs[val],Rounding = r or 0,Callback = function(n)
-					Configs[v] = n
-					Net.save(v, n)
-					if call and call ~= nil then
-						call(n)
-					end	
-				end})
-			end
-
-			function UI:Text(tab: SharedTable, v: string, callback: func)
-				local Paragarp = tab:Label(v)
-				if callback and callback ~= nil then
-					Net.loop(1, function()
-						callback(Paragarp)
-					end)
-				end
-				return Paragarp
-			end
-
-			return UI
-		end
+		end)
 	end
-	
-	task.spawn(function()
-		local Home = Window:Tab(translate("Home", "หน้าหลัก"))
 
-		local Performance = Home:Section(translate("Performance", "ประสิทธิภาพ"), "r") do
-			Net.components:Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
-				if v then
-					RunService:Set3dRenderingEnabled(false)
-				else
-					RunService:Set3dRenderingEnabled(true)
-				end
-			end)
-			Net.components:Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
-				_G.FullBrightEnabled = v
-			end)
-			Performance:Button(Performance, translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
-				pcall(function()
-					local Terrain = workspace:FindFirstChildOfClass('Terrain')
-					Terrain.WaterWaveSize = 0
-					Terrain.WaterWaveSpeed = 0
-					Terrain.WaterReflectance = 0
-					Terrain.WaterTransparency = 0
-					game.Lighting.GlobalShadows = false
-					game.Lighting.FogEnd = 9e9
-					settings().Rendering.QualityLevel = 1
-					for i,v in pairs(game:GetDescendants()) do
-						if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-							v.Material = "Plastic"
-							v.Reflectance = 0
-						elseif v:IsA("Decal") then
-							v.Transparency = 1
-						elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-							v.Lifetime = NumberRange.new(0)
-						elseif v:IsA("Explosion") then
-							v.BlastPressure = 1
-							v.BlastRadius = 1
-						end
-					end
-					for i,v in pairs(Lighting:GetDescendants()) do
-						if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
-							v.Enabled = false
-						end
-					end
-				end)
+	Net.Text = function(tab: SharedTable, v: string, callback: func)
+		local Paragarp = tab:Label(v)
+		if callback ~= nil then
+			Net.again(function()
+				callback(Paragarp)
 			end)
 		end
-
-		local Server = Home:Section(translate("Server", "เซิร์ฟเวอร์"), 'l') do
-			Server:Button(Performance, translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
-				Net.rejoin()
-			end)
-		end
-	end)
+		return Paragarp
+	end
 end
 
-do
+task.spawn(function()
+	local Home = Window:Tab(translate("Home", "หน้าหลัก"))
+	local Performance = Home:Section(translate("Performance", "ประสิทธิภาพ"), "r") do
+		Net.Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
+			if v then
+				RunService:Set3dRenderingEnabled(false)
+			else
+				RunService:Set3dRenderingEnabled(true)
+			end
+		end)
+		Net.Toggle(Performance, translate("Fullbright", "เปิดแสงสว่าง"), 'Fullbright')
+		Performance:Button(translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
+			pcall(function()
+				local Terrain = workspace:FindFirstChildOfClass('Terrain')
+				Terrain.WaterWaveSize = 0
+				Terrain.WaterWaveSpeed = 0
+				Terrain.WaterReflectance = 0
+				Terrain.WaterTransparency = 0
+				game.Lighting.GlobalShadows = false
+				game.Lighting.FogEnd = 9e9
+				settings().Rendering.QualityLevel = 1
+				for i,v in pairs(game:GetDescendants()) do
+					if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+						v.Material = "Plastic"
+						v.Reflectance = 0
+					elseif v:IsA("Decal") then
+						v.Transparency = 1
+					elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+						v.Lifetime = NumberRange.new(0)
+					elseif v:IsA("Explosion") then
+						v.BlastPressure = 1
+						v.BlastRadius = 1
+					end
+				end
+				for i,v in pairs(Lighting:GetDescendants()) do
+					if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+						v.Enabled = false
+					end
+				end
+			end)
+		end)
+	end
+
+	local Server = Home:Section(translate("Server", "เซิร์ฟเวอร์"), 'l') do
+		Net.default('Input JobID', JobId)
+		Server:Textbox({Value = "Input JobID", function(v)
+			Configs["Input JobID"] = v
+			Net.save("Input JobID", v)
+		end})
+		Server:Button(translate("Join", "เข้าร่วม"), function()
+			TeleportService:TeleportToPlaceInstance(PlaceId, Configs['Input JobID'], LocalPlayer)
+		end)
+		Server:Button(translate("Clipboard", "คัดลอก"), function()
+			setclipboard(JobId)
+		end)
+		Server:Button(translate("Rejoin", "รีจอยน์"), function()
+			Net.rejoin()
+		end)
+		Server:Button(translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
+			Net.s_hop()
+		end)
+	end
+
+	local PlayersSS = Home:Section(translate("Players", "ผู้เล่น"), 'l') do
+		Net.Text(PlayersSS, "All Players : N/A", function(v)
+			v:Title(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(0, 255, 127)))
+		end)
+
+		local AllPlayer = {}
+
+		for _, v in pairs(Players:GetPlayers()) do
+			if v ~= LocalPlayer and v.Character then
+				table.insert(AllPlayer, v.Name)
+			end
+		end
+
+		Net.default('Select Player', AllPlayer[1])
+		local PlayerDropdown = PlayersSS:Dropdown({Title = translate("Select Players", "เลือกผู้เล่น"),Multi = false,List = AllPlayer,Value = Configs['Select Player'],Callback = function(v)
+			Configs['Select Player'] = v
+			Net.save('Select Player', v)
+		end})
+		PlayersSS:Button(translate("Refresh", "รีเฟรช"), function()
+			PlayerDropdown:Clear()
+			for _, v in pairs(Players:GetPlayers()) do
+				if v ~= LocalPlayer and v.Character then
+					PlayerDropdown:AddList(v.Name)
+				end
+			end
+		end)
+		PlayersSS:Button(translate("Teleport to Player", "เทเลพอร์ตไปหาผู้เล่น"), function()
+			pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character)
+		end)
+		
+		Funcs['Tween Player'] = function(Value)
+			Net.loop(Value, 0.1, function()
+				pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character:GetPivot(), 2)
+			end, function()
+				return not Value
+			end)
+		end
+		
+		Net.Toggle(PlayersSS, translate("Tween to Player", "บินไปหาผู้เล่น"), 'Tween Player')
+		Net.Toggle(PlayersSS, translate("View Players", "ดูผู้เล่น"), 'View Player', function(v)
+			if v then
+				Camera.CameraSubject = Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character
+			else
+				Camera.CameraSubject = Humanoid
+			end
+		end)
+	end
 	
+	local Power = Home:Section(translate("Powers", "พลัง"), 'r') do
+		local OldSpeed = Humanoid.WalkSpeed
+		Net.default('Walkspeed', Humanoid.WalkSpeed)
+		
+		local CFloop
+		Power:Toggle(translate("CFLY", "บินถอดวิญญาณ"), false, function(v)
+			if v then
+				Humanoid.PlatformStand = true
+				local Head = Character:WaitForChild("Head")
+				Head.Anchored = true
+				if CFloop then CFloop:Disconnect() end
+				CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+					local moveDirection = Character:FindFirstChildOfClass('Humanoid').MoveDirection * (100 * deltaTime)
+					local headCFrame = Head.CFrame
+					local cameraCFrame = workspace.CurrentCamera.CFrame
+					local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+					cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+					local cameraPosition = cameraCFrame.Position
+					local headPosition = headCFrame.Position
+
+					local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+					Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+				end)
+			else
+				if CFloop then
+					CFloop:Disconnect()
+					Humanoid.PlatformStand = false
+					local Head = Character:WaitForChild("Head")
+					Head.Anchored = false
+				end
+			end
+		end)
+		
+		Power:Slider({Title = translate("Speed", "ความเร็ว"),Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
+			Configs['Walkspeed'] = v
+			Net.save('Walkspeed', v)
+			Humanoid.WalkSpeed = v
+		end})
+		
+		Power:Button(translate("Change to Old Walkspeed", "ปรับให้ความเร็วเท่าเดิม"), function()
+			Humanoid.WalkSpeed = OldSpeed
+		end)
+		
+		LocalPlayer.CharacterAdded:Connect(function(char)
+			char:WaitForChild("Humanoid").WalkSpeed = Configs['Walkspeed']
+		end)
+	end
+	
+	local Config = Home:Section(translate("Configs", "คอนฟิก"), 'r') do
+		Config:Button(translate("Reset Configs", "รีเซ็ตการตั้งค่า"), function()
+			delfile(Folder)
+		end)
+	end
+end)
+
+do
+
 	_G.NormalLightingSettings = {
 		Brightness = Lighting.Brightness,
 		ClockTime = Lighting.ClockTime,
@@ -576,10 +677,10 @@ do
 	Lighting:GetPropertyChangedSignal("Brightness"):Connect(function()
 		if Lighting.Brightness ~= 1 and Lighting.Brightness ~= _G.NormalLightingSettings.Brightness then
 			_G.NormalLightingSettings.Brightness = Lighting.Brightness
-			if not _G.FullBrightEnabled then
+			if not Configs['Fullbright'] then
 				repeat
 					wait()
-				until _G.FullBrightEnabled
+				until Configs['Fullbright']
 			end
 			Lighting.Brightness = 1
 		end
@@ -588,10 +689,10 @@ do
 	Lighting:GetPropertyChangedSignal("ClockTime"):Connect(function()
 		if Lighting.ClockTime ~= 12 and Lighting.ClockTime ~= _G.NormalLightingSettings.ClockTime then
 			_G.NormalLightingSettings.ClockTime = Lighting.ClockTime
-			if not _G.FullBrightEnabled then
+			if not Configs['Fullbright'] then
 				repeat
 					wait()
-				until _G.FullBrightEnabled
+				until Configs['Fullbright']
 			end
 			Lighting.ClockTime = 12
 		end
@@ -600,10 +701,10 @@ do
 	Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
 		if Lighting.FogEnd ~= 786543 and Lighting.FogEnd ~= _G.NormalLightingSettings.FogEnd then
 			_G.NormalLightingSettings.FogEnd = Lighting.FogEnd
-			if not _G.FullBrightEnabled then
+			if not Configs['Fullbright'] then
 				repeat
 					wait()
-				until _G.FullBrightEnabled
+				until Configs['Fullbright']
 			end
 			Lighting.FogEnd = 786543
 		end
@@ -612,10 +713,10 @@ do
 	Lighting:GetPropertyChangedSignal("GlobalShadows"):Connect(function()
 		if Lighting.GlobalShadows ~= false and Lighting.GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
 			_G.NormalLightingSettings.GlobalShadows = Lighting.GlobalShadows
-			if not _G.FullBrightEnabled then
+			if not Configs['Fullbright'] then
 				repeat
 					wait()
-				until _G.FullBrightEnabled
+				until Configs['Fullbright']
 			end
 			Lighting.GlobalShadows = false
 		end
@@ -624,10 +725,10 @@ do
 	Lighting:GetPropertyChangedSignal("Ambient"):Connect(function()
 		if Lighting.Ambient ~= Color3.fromRGB(178, 178, 178) and Lighting.Ambient ~= _G.NormalLightingSettings.Ambient then
 			_G.NormalLightingSettings.Ambient = Lighting.Ambient
-			if not _G.FullBrightEnabled then
+			if not Configs['Fullbright'] then
 				repeat
 					wait()
-				until _G.FullBrightEnabled
+				until Configs['Fullbright']
 			end
 			Lighting.Ambient = Color3.fromRGB(178, 178, 178)
 		end
@@ -640,29 +741,24 @@ do
 	Lighting.Ambient = Color3.fromRGB(178, 178, 178)
 
 	local LatestValue = true
-	task.spawn(function()
-		repeat
-			Net.render()
-		until _G.FullBrightEnabled
-		Net.loop(function()
-			if _G.FullBrightEnabled ~= LatestValue then
-				if not _G.FullBrightEnabled then
-					Lighting.Brightness = _G.NormalLightingSettings.Brightness
-					Lighting.ClockTime = _G.NormalLightingSettings.ClockTime
-					Lighting.FogEnd = _G.NormalLightingSettings.FogEnd
-					Lighting.GlobalShadows = _G.NormalLightingSettings.GlobalShadows
-					Lighting.Ambient = _G.NormalLightingSettings.Ambient
-				else
-					Lighting.Brightness = 1
-					Lighting.ClockTime = 12
-					Lighting.FogEnd = 786543
-					Lighting.GlobalShadows = false
-					Lighting.Ambient = Color3.fromRGB(178, 178, 178)
-				end
-				LatestValue = not LatestValue
+	Net.again(function()
+		if Configs['Fullbright'] ~= LatestValue then
+			if not Configs['Fullbright'] then
+				Lighting.Brightness = _G.NormalLightingSettings.Brightness
+				Lighting.ClockTime = _G.NormalLightingSettings.ClockTime
+				Lighting.FogEnd = _G.NormalLightingSettings.FogEnd
+				Lighting.GlobalShadows = _G.NormalLightingSettings.GlobalShadows
+				Lighting.Ambient = _G.NormalLightingSettings.Ambient
+			else
+				Lighting.Brightness = 1
+				Lighting.ClockTime = 12
+				Lighting.FogEnd = 786543
+				Lighting.GlobalShadows = false
+				Lighting.Ambient = Color3.fromRGB(178, 178, 178)
 			end
-		end)
+			LatestValue = not LatestValue
+		end
 	end)
 end
 
-return {Net;C;Env;Configs;Window;translate;}
+return {Net;Funcs;Env;Configs;Window;translate;}
