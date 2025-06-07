@@ -363,7 +363,7 @@ do
 	end
 
 	Net.include = setmetatable({}, {__call = function(self, studio: syn)
-		if studio == 'string' then
+		if type(studio) == 'string' then
 			LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
 				Character = newCharacter;
 				Humanoid = Character:WaitForChild('Humanoid');
