@@ -449,16 +449,8 @@ do
 		local UI: SharedTable = {}
 		
 		do
-			function UI:Tab(v: string)
-				return Window:Tab(v)
-			end
-
-			function UI:Section(tab: SharedTable, v: string, side: string)
-				return tab:Section(v, side)
-			end
-
 			function UI:Toggle(sec: SharedTable, v: string, val: boolean | string, call: func)
-				return sec:Toggle({Title = v,Value = Configs[val],Callback = function(n)
+				return sec:Toggle(v, Configs[val], function(n)
 					Configs[val] = n
 					Net.save(val, n)
 					if not n then
@@ -467,7 +459,7 @@ do
 					if call and call ~= nil then
 						call(n)
 					end
-				end})
+				end)
 			end
 
 			function UI:Dropdown(sec: SharedTable, v: string, Multi: boolean, l: SharedTable, val: boolean | string, call: func)
@@ -528,7 +520,7 @@ do
 			Net.components:Toggle(Performance, Net.translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
 				_G.FullBrightEnabled = v
 			end)
-			Net.components:Button(Performance, Net.translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
+			Performance:Button(Performance, Net.translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
 				pcall(function()
 					local Terrain = workspace:FindFirstChildOfClass('Terrain')
 					Terrain.WaterWaveSize = 0
