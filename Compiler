@@ -6,8 +6,17 @@ local C: SharedTable = {} or { ... };
 local META = setmetatable({}, {__index = function(_, key) return game:GetService(key)end})
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
 local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor()))
-local Window: SharedTable = loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Library/refs/heads/main/%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%84%E0%B8%A3', true))().new(128185233852701, Enum.KeyCode.F1)
+local GG: SharedTable = loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Library/refs/heads/main/%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%84%E0%B8%A3', true))()
+local Window: SharedTable = GG.new(128185233852701, Enum.KeyCode.F1)
 request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
+
+translate = function(en: string, th: string)
+	if _G.Thailand then
+		return tostring(th)
+	else
+		return tostring(en)
+	end
+end
 
 do
 	Net.import = function(Name: string, Callback: func)
@@ -15,13 +24,15 @@ do
 	end
 
 	Net.loop = function(delay: number, Callback: func)
-		while task.wait((delay or 0.1)) do
-			if type(Callback) == 'string' and C[Callback] == 'function' then
-				C[Callback]()
-			elseif type(Callback) == 'function' then
-				pcall(Callback)
+		return task.spawn(function()
+			while task.wait((delay or 0.1)) do
+				if type(Callback) == 'string' and C[Callback] == 'function' then
+					pcall(C[Callback])
+				elseif type(Callback) == 'function' then
+					pcall(Callback)
+				end
 			end
-		end
+		end)
 	end
 
 	Net.save = function(key: string, value: boolean | string | number | table | any)
@@ -99,14 +110,6 @@ do
 			end
 		end
 		return nil
-	end
-
-	Net.translate = function(en: string, th: string)
-		if _G.Thailand then
-			return tostring(th)
-		else
-			return tostring(en)
-		end
 	end
 
 	Net.s_hop = function()
@@ -362,7 +365,7 @@ do
 		end
 	end
 
-	Net.include = setmetatable({}, {__call = function(self, studio: syn)
+	Net.include = function(studio: syn)
 		if type(studio) == 'string' then
 			LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
 				Character = newCharacter;
@@ -383,7 +386,7 @@ do
 		else
 			while true do end
 		end
-	end})
+	end
 
 	Net.round = function(n: number)
 		return math.floor(tonumber(n) + 1)
@@ -445,7 +448,7 @@ do
 		end
 	end
 
-	Net.components = (function()
+	Net.components = function()
 		local UI: SharedTable = {}
 		
 		do
@@ -504,23 +507,23 @@ do
 
 			return UI
 		end
-	end)(true)
-
+	end
+	
 	task.spawn(function()
-		local Home = Net.components:Tab(Net.translate("Home", "หน้าหลัก"))
+		local Home = Window:Tab(translate("Home", "หน้าหลัก"))
 
-		local Performance = Home:Section(Net.translate("Performance", "ประสิทธิภาพ"), "r") do
-			Net.components:Toggle(Performance, Net.translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
+		local Performance = Home:Section(translate("Performance", "ประสิทธิภาพ"), "r") do
+			Net.components:Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
 				if v then
 					RunService:Set3dRenderingEnabled(false)
 				else
 					RunService:Set3dRenderingEnabled(true)
 				end
 			end)
-			Net.components:Toggle(Performance, Net.translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
+			Net.components:Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
 				_G.FullBrightEnabled = v
 			end)
-			Performance:Button(Performance, Net.translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
+			Performance:Button(Performance, translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
 				pcall(function()
 					local Terrain = workspace:FindFirstChildOfClass('Terrain')
 					Terrain.WaterWaveSize = 0
@@ -552,13 +555,16 @@ do
 			end)
 		end
 
-		local Server = Home:Section(Net.translate("Server", "เซิร์ฟเวอร์"), 'l') do
-			
+		local Server = Home:Section(translate("Server", "เซิร์ฟเวอร์"), 'l') do
+			Server:Button(Performance, translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
+				Net.rejoin()
+			end)
 		end
 	end)
 end
 
 do
+	
 	_G.NormalLightingSettings = {
 		Brightness = Lighting.Brightness,
 		ClockTime = Lighting.ClockTime,
@@ -659,10 +665,4 @@ do
 	end)
 end
 
-return {
-	Net;
-	C;
-	Env;
-	Configs;
-	Window;
-}
+return {Net;C;Env;Configs;Window;translate;}
