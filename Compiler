@@ -1,3 +1,5 @@
+_G.Thailand = true
+
 repeat 
 	task.wait()
 until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer
@@ -306,7 +308,7 @@ do
 
 	Net.equip = function(Tool: Tool | string)
 		if not Character then return end
-		if typeof(Tool) == 'Tool' then
+		if Tool:IsA("Tool") then
 			return Humanoid:EquipTool(Tool)
 		elseif typeof(Tool) == 'string' then
 			if Backpack:FindFirstChild(Tool) and not Character:FindFirstChild(Tool) then
