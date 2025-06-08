@@ -1,5 +1,3 @@
-_G.Thailand = true
-
 repeat 
 	task.wait()
 until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer
@@ -31,7 +29,7 @@ do
 
 	Net.loop = function(Value, interval, func, customFunc)
 		while Value do local startTick = tick()
-			if func then pcall(func)  end
+			if func then func()  end
 			if customFunc and customFunc() then break end
 			repeat
 				RunService.Heartbeat:Wait()
