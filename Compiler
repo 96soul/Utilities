@@ -378,7 +378,7 @@ do
 		return HttpService:JSONDecode(readfile(path))
 	end
 
-	Net.include = function(studio: syn)
+	Env.include = function(studio: syn)
 		if type(studio) == 'string' then
 			LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
 				Character = newCharacter;
