@@ -1,3 +1,4 @@
+_G.Thailand = true
 repeat 
 	task.wait()
 until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer
@@ -15,7 +16,7 @@ local META = setmetatable({}, {__index = function(_, key) return cloneref(game:G
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
 local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor()))
 local GG: SharedTable = loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Library/refs/heads/main/%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%84%E0%B8%A3', true))()
-local Window: SharedTable = GG.new(71285559554524, Enum.KeyCode.F1)
+local Window: SharedTable = GG.new(131342464463678, Enum.KeyCode.F1)
 request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
 
 do
@@ -494,6 +495,12 @@ end
 
 task.spawn(function()
 	local Home = Window:Tab(translate("Home", "หน้าหลัก"))
+	local Ds = Home:Section(translate("Discord", "ดิสคอร์ด"), "l") do
+		Net.Text(Ds, translate("Please join my Discord If you join, I’ll be sooo happyyy Thank!!", "อย่าลืมเข้าดิสคอร์ดของเค้าหน่อยน้า ถ้าเข้า เค้าจะดีใจมากกกๆเลย >///< ขอบคุณล่วงหน้าน่ะค่ะะ"))
+		Ds:Button(translate("Discord", "ดิสคอร์ด"), function()
+			setclipboard('https://discord.gg/9ymQNuDbHs')
+		end)
+	end
 	local Performance = Home:Section(translate("Performance", "ประสิทธิภาพ"), "r") do
 		Net.Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
 			if v then
@@ -557,7 +564,7 @@ task.spawn(function()
 
 	local PlayersSS = Home:Section(translate("Players", "ผู้เล่น"), 'l') do
 		Net.Text(PlayersSS, "All Players : N/A", function(v)
-			v:Title(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(0, 255, 127)))
+			v:Title(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(255, 0, 127)))
 		end)
 
 		local AllPlayer = {}
@@ -573,6 +580,7 @@ task.spawn(function()
 			Configs['Select Player'] = v
 			Net.save('Select Player', v)
 		end})
+		
 		PlayersSS:Button(translate("Refresh", "รีเฟรช"), function()
 			PlayerDropdown:Clear()
 			for _, v in pairs(Players:GetPlayers()) do
@@ -581,6 +589,7 @@ task.spawn(function()
 				end
 			end
 		end)
+		
 		PlayersSS:Button(translate("Teleport to Player", "เทเลพอร์ตไปหาผู้เล่น"), function()
 			pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character)
 		end)
