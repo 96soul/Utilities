@@ -4,11 +4,25 @@ local Data = {} do
 	}
 
 	Data.FruitsList = {
-		"Succulent","Candy Blossom","Mushroom","Nightshade","Avocado","Pepper","Moon Blossom","Moonglow","Starfruit","Moonflower","Mint","Glowshroom","Cacao","Beanstalk","Crimson Vine","Moon Melon","Blood Banana","Moon Mango","Carrot","Tomato","Strawberry","Blueberry","Corn","Pumpkin","Watermelon","Apple","Coconut","Dragon Fruit","Super","Bamboo","Raspberry","Pineapple","Peach","Cactus","Grape","Pear","Eggplant","Purple Cabbage","Lemon","Chocolate Carrot","Easter Egg","Orange Tulip","Pink Tulip","Crocus","Daffodil","Cherry Blossom","Red Lollipop","Blue Lollipop","Candy Sunflower","Banana","Passionfruit","Cursed Fruit","Lotus","Papaya","Soul Fruit","Mega Mushroom","Mango","Venus Fly Trap","Cranberry","Durian"
+		"Succulent","Candy Blossom","Mushroom","Nightshade","Avocado","Pepper","Moon Blossom","Moonglow","Starfruit","Moonflower","Mint","Glowshroom","Cacao","Beanstalk","Crimson Vine","Moon Melon","Blood Banana","Moon Mango","Carrot","Tomato","Strawberry","Blueberry","Corn","Pumpkin","Watermelon","Apple","Coconut","Dragon Fruit","Super","Bamboo","Raspberry","Pineapple","Peach","Cactus","Grape","Pear","Eggplant","Purple Cabbage","Lemon","Chocolate Carrot","Easter Egg","Orange Tulip","Pink Tulip","Crocus","Daffodil","Cherry Blossom","Red Lollipop","Blue Lollipop","Candy Sunflower","Banana","Passionfruit","Cursed Fruit","Lotus","Papaya","Soul Fruit","Mega Mushroom","Mango","Venus Fly Trap","Cranberry","Durian", 'Sugar Apple'
 	}
 
 	Data.SeedList = {
-		"Carrot","Strawberry","Blueberry","Orange Tulip","Tomato","Corn","Daffodil","Watermelon","Pumpkin","Apple","Bamboo","Coconut","Cactus","Dragon Fruit","Mango","Grape","Mushroom","Pepper","Cacao","Beanstalk","Ember Lily"
+		"Carrot","Strawberry","Blueberry","Orange Tulip","Tomato","Corn","Daffodil","Watermelon","Pumpkin","Apple","Bamboo","Coconut","Cactus","Dragon Fruit","Mango","Grape","Mushroom","Pepper","Cacao","Beanstalk","Ember Lily", "Sugar Apple"
+	}
+	Data.GearList = {
+		'Watering Can',
+		'Trowel',
+		'Recall Wrench',
+		'Basic Sprinkler',
+		'Advanced Sprinkler',
+		'Godly Sprinkler',
+		'Master Sprinkler',
+		'Lightning Rod',
+		'Cleaning Spray',
+		'Favorite Tool',
+		'Harvest Tool',
+		'Friendship Pot'
 	}
 end
 
