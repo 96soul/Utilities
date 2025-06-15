@@ -36,7 +36,7 @@ do
 			until tick() - startTick >= (interval or 0.1) 
 		end
 	end
-	
+
 	Net.again = function(f)
 		task.spawn(function()
 			while task.wait(0.1) do
@@ -213,48 +213,37 @@ do
 		end
 	end
 
-	Net.tween = function(target: CFrame, s: number)
-		local speed = s or 1
-		while not _G['StopTween'] do
-			task.wait()
-			for _, v in pairs(Character:GetDescendants()) do
-				if v:IsA("BasePart") then v.CanCollide = false end
-			end
-			
-			if not HumanoidRootPart:FindFirstChild("BodyVelocity") then
-				local BodyVelocity = Instance.new("BodyVelocity")
-				BodyVelocity.Name = "BodyVelocity"
-				BodyVelocity.Parent = HumanoidRootPart
-				BodyVelocity.MaxForce = Vector3.new(0, math.huge, 0)
-				BodyVelocity.Velocity = Vector3.new(0, 0, 0)
-			end
-
-			local Percent = 60
-			local Dift = Vector3.new(target.Position.X, 0, target.Position.Z) - Vector3.new(HumanoidRootPart.Position.X, 0, HumanoidRootPart.Position.Z)
-			local Sx = (Dift.X < 0 and -1 or 1) * speed
-			local Sz = (Dift.Z < 0 and -1 or 1) * speed
-			local SpeedX = math.abs(Dift.X) < Sx and Dift.X or Sx
-			local SpeedZ = math.abs(Dift.Z) < Sz and Dift.Z or Sz
-
-			if Dift.Magnitude <= 0.1 or (target.Position - HumanoidRootPart.Position).Magnitude < 0.1 then break end
-
-			if tonumber(Sx) < (speed or 4) or tonumber(Sx) > (speed or 4) then Sx = speed end
-			if tonumber(Sz) < (speed or 4) or tonumber(Sz) > (speed or 4) then Sz = speed end
-
-			HumanoidRootPart.CFrame = CFrame.new(HumanoidRootPart.CFrame.X, target.Y, HumanoidRootPart.CFrame.Z)
-			HumanoidRootPart.CFrame = HumanoidRootPart.CFrame + Vector3.new(math.abs(SpeedZ) < (Percent) and SpeedX or SpeedX/1.5, 0, math.abs(SpeedX) < (Percent) and SpeedZ or SpeedZ/1.5)			
+	Net.tween = function(target: CFrame)
+		if not Character then return end
+		for _, v in pairs(Character:GetDescendants()) do
+			if v:IsA("BasePart") then v.CanCollide = false end
 		end
-		HumanoidRootPart:PivotTo(target)
+		if not HumanoidRootPart:FindFirstChild("BodyVelocity222") then
+			local BodyVelocity = Instance.new("BodyVelocity")
+			BodyVelocity.Name = "BodyVelocity222"
+			BodyVelocity.Parent = HumanoidRootPart
+			BodyVelocity.MaxForce = Vector3.new(0, math.huge, 0)
+			BodyVelocity.Velocity = Vector3.new(0, 0, 0)
+		end
+		local Distance = (target.Position - HumanoidRootPart.Position).Magnitude
+		if Distance > 0 and Distance < 300 then
+			return TweenService:Create(HumanoidRootPart,TweenInfo.new(0.08, Enum.EasingStyle.Linear),{CFrame = target}):Play()
+		else
+			local tw = TweenService:Create(HumanoidRootPart,TweenInfo.new(Distance / 300, Enum.EasingStyle.Linear),{CFrame = target})
+			function S()
+				if tw then
+					tw:Cancel()
+				end
+				if HumanoidRootPart:FindFirstChild("BodyVelocity222") then
+					HumanoidRootPart:FindFirstChild("BodyVelocity222"):Destroy()
+				end 
+			end
+			return tw:Play()
+		end
 	end
 
 	Net.stoptw = function(v)
-		if not v then 
-			Net.tween(HumanoidRootPart.CFrame)
-			wait()
-			if HumanoidRootPart:FindFirstChild("BodyVelocity") then
-				HumanoidRootPart:FindFirstChild("BodyVelocity"):Destroy()
-			end 
-		end
+		if not v then pcall(S) end
 	end
 
 	Net.tp = function(pos: any, v: boolean)
@@ -351,23 +340,6 @@ do
 		]]
 	end
 
-	Net.safecaller = function()
-		for i, v in ipairs(Configs) do
-			local t = typeof(v)
-			if v == nil and t == "string" then
-				Configs[i] = 'N/A'
-			elseif v == nil and t == "table" then
-				Configs[i] = {'N/A'}
-			elseif v == nil and t == "number" then
-				Configs[i] = 0
-			elseif v == nil and t == "boolean" then
-				Configs[i] = false
-			else
-				return 'not valid arguments'
-			end
-		end
-	end
-
 	Net.load = function()
 		local base = "Fetching'Script/Config/" .. PlayerId
 		local path = base .. "/" .. PlaceId .. ".json"
@@ -393,6 +365,35 @@ do
 		else
 			while true do end
 		end
+	end
+
+	Env.c = function(f: Folder, c: func)
+		if not f then return end
+		for _, v in pairs(f:GetChildren()) do
+			c(v)
+		end
+	end
+
+	Env.d = function(f: Folder, c: func)
+		if not f then return end
+		for _, v in ipairs(f:GetDescendants()) do
+			c(v)
+		end
+	end
+
+	Env.t = function(f: Folder, c: func)
+		if not f or type(f) ~= 'table' then return end
+		for _, v in pairs(f) do
+			c(v)
+		end
+	end
+
+	Env.f = function(n: Instance ,i: string, d: boolean)
+		return (d and d ~= nil and n:FindFirstChild((i and tostring(i)), true)) or n:FindFirstChild(i and tostring(i))
+	end
+
+	Env.fc = function(n: Instance ,i: string, d: boolean)
+		return (d and d ~= nil and n:FindFirstChildOfClass((i and tostring(i)), true)) or n:FindFirstChildOfClass(i and tostring(i))
 	end
 
 	Net.round = function(n: number)
@@ -456,7 +457,6 @@ do
 	end
 
 	Configs = Net.load()
-	Net.safecaller()
 
 	Net.Toggle = function(Tab, Title, SettingName, CallBack)
 		local tasks;
@@ -469,9 +469,11 @@ do
 						Funcs[SettingName](Configs[SettingName])
 					end
 				end)
-			elseif not val and tasks then 
+			else
 				Net.stoptw(val)
-				task.cancel(tasks)
+				if tasks ~= nil then
+					task.cancel(tasks)
+				end
 			end
 			if CallBack ~= nil then
 				CallBack(val)
@@ -582,15 +584,15 @@ task.spawn(function()
 		PlayersSS:Button(translate("Teleport to Player", "เทเลพอร์ตไปหาผู้เล่น"), function()
 			pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character)
 		end)
-		
+
 		Funcs['Tween Player'] = function(Value)
 			Net.loop(Value, 0.1, function()
-				pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character:GetPivot(), 2)
+				pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character:GetPivot() + Vector3.new(0, 40, 0))
 			end, function()
 				return not Value
 			end)
 		end
-		
+
 		Net.Toggle(PlayersSS, translate("Tween to Player", "บินไปหาผู้เล่น"), 'Tween Player')
 		Net.Toggle(PlayersSS, translate("View Players", "ดูผู้เล่น"), 'View Player', function(v)
 			if v then
@@ -600,11 +602,11 @@ task.spawn(function()
 			end
 		end)
 	end
-	
+
 	local Power = Home:Section(translate("Powers", "พลัง"), 'r') do
 		local OldSpeed = Humanoid.WalkSpeed
 		Net.default('Walkspeed', Humanoid.WalkSpeed)
-		
+
 		local CFloop
 		Power:Toggle(translate("CFLY", "บินถอดวิญญาณ"), false, function(v)
 			if v then
@@ -633,23 +635,24 @@ task.spawn(function()
 				end
 			end
 		end)
-		
+
 		Power:Slider({Title = translate("Speed", "ความเร็ว"),Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
 			Configs['Walkspeed'] = v
 			Net.save('Walkspeed', v)
 			Humanoid.WalkSpeed = v
 		end})
-		
+
 		Power:Button(translate("Change to Old Walkspeed", "ปรับให้ความเร็วเท่าเดิม"), function()
 			Humanoid.WalkSpeed = OldSpeed
 		end)
-		
+
 		LocalPlayer.CharacterAdded:Connect(function(char)
 			char:WaitForChild("Humanoid").WalkSpeed = Configs['Walkspeed']
 		end)
 	end
-	
+
 	local Config = Home:Section(translate("Configs", "คอนฟิก"), 'r') do
+		Net.Toggle(Config, translate("Keep Script", "รันอัตโนมัติ"), 'Keep Script')
 		Config:Button(translate("Reset Configs", "รีเซ็ตการตั้งค่า"), function()
 			delfile(Folder)
 		end)
@@ -749,6 +752,14 @@ do
 				Lighting.Ambient = Color3.fromRGB(178, 178, 178)
 			end
 			LatestValue = not LatestValue
+		end
+	end)
+	local TeleportCheck = false
+	LocalPlayer.OnTeleport:Connect(function(State)
+		if Configs['Keep Script'] and (not TeleportCheck) and queueonteleport then
+			TeleportCheck = true
+			print('Success')
+			queueonteleport(Configs['buffer'])
 		end
 	end)
 end
