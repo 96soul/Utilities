@@ -12,20 +12,39 @@ local Configs: SharedTable = {} or { ... };
 local Net: SharedTable = {} Net.__index = Net;
 local Funcs: SharedTable = {} or { ... };
 local META = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
+local Main = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main"))()
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
-local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor()))
-local GG: SharedTable = loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Library/refs/heads/main/%E0%B8%84%E0%B8%A7%E0%B8%A2%E0%B9%84%E0%B8%A3', true))()
-local Window: SharedTable = GG.new(131342464463678, Enum.KeyCode.F1)
+local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor())) --if Env._ then return end Env._ = true
 request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
 
-do
-	translate = function(en: string, th: string)
-		if _G.Thailand then
-			return tostring(th)
-		else
-			return tostring(en)
-		end
+GetSize = function()
+	if UserInputService.KeyboardEnabled then
+		return UDim2.new(0, 915, 0, 815)
+	else
+		return UDim2.new(0, 600, 0, 500)
 	end
+end
+
+local Window = Main.new({
+	Logo = 128185233852701,
+	Title = "Fetching's Official",
+	Desc = "by @96soul",
+	Discord = "https://discord.gg/BHpSEz2nzV",
+	KeyEnabled = false,
+	Key = "fetching.gg/2025",
+	Size = GetSize()
+})
+
+translate = function(en, th)
+	if Configs['Thailand'] then
+		return tostring(th)
+	elseif not Configs['Thailand'] then
+		return tostring(en)
+	end
+	return warn "attem to nil index with Variable."
+end
+
+do
 
 	Net.loop = function(Value, interval, func, customFunc)
 		while Value do local startTick = tick()
@@ -357,7 +376,8 @@ do
 				Humanoid = Character:WaitForChild('Humanoid');
 				HumanoidRootPart = Character:WaitForChild('HumanoidRootPart');
 				Backpack = LocalPlayer:WaitForChild("Backpack");
-			end)LocalPlayer.Idled:Connect(function()
+			end)
+			LocalPlayer.Idled:Connect(function()
 				VirtualUser:CaptureController();
 				VirtualUser:ClickButton2(Vector2.new());
 			end)
@@ -367,24 +387,24 @@ do
 		end
 	end
 
-	Env.c = function(f: Folder, c: func)
+	Env.c = function(f: Folder)
 		if not f then return end
 		for _, v in pairs(f:GetChildren()) do
-			c(v)
+			return v
 		end
 	end
 
-	Env.d = function(f: Folder, c: func)
+	Env.d = function(f: Folder)
 		if not f then return end
 		for _, v in ipairs(f:GetDescendants()) do
-			c(v)
+			return v
 		end
 	end
 
-	Env.t = function(f: Folder, c: func)
+	Env.t = function(f: Folder)
 		if not f or type(f) ~= 'table' then return end
 		for _, v in pairs(f) do
-			c(v)
+			return v
 		end
 	end
 
@@ -458,9 +478,32 @@ do
 
 	Configs = Net.load()
 
-	Net.Toggle = function(Tab, Title, SettingName, CallBack)
+	Net.Toggle = function(Tab, Title, SettingName, CallBackz)
 		local tasks;
-		return Tab:Toggle(Title, Configs[SettingName], function(val)
+		return Tab:Toggle({Title = Title, Value = Configs[SettingName], Callback = function(val)
+			Configs[SettingName] = val
+			Net.save(SettingName, Configs[SettingName] or val)
+			if val then
+				tasks = task.spawn(function()
+					if Funcs[SettingName] then
+						Funcs[SettingName](Configs[SettingName])
+					end
+				end)
+			else
+				Net.stoptw(val)
+				if tasks ~= nil then
+					task.cancel(tasks)
+				end
+			end
+			if CallBackz ~= nil then
+				CallBackz(val)
+			end
+		end})
+	end
+	
+	Net.ToggleImage = function(Tab, Title, Icon, SettingName, CallBack)
+		local tasks;
+		return Tab:Toggle({Title = Title, Icon = Icon, Value = Configs[SettingName], Callback = function(val)
 			Configs[SettingName] = val
 			Net.save(SettingName, Configs[SettingName] or val)
 			if val then
@@ -478,9 +521,9 @@ do
 			if CallBack ~= nil then
 				CallBack(val)
 			end
-		end)
+		end})
 	end
-
+	
 	Net.Text = function(tab: SharedTable, v: string, callback: func)
 		local Paragarp = tab:Label(v)
 		if callback ~= nil then
@@ -490,180 +533,188 @@ do
 		end
 		return Paragarp
 	end
+	
+	Net.Button = function(tab, Title, c)
+		return tab:Button({Title = Title, Callback = function()
+			c()
+		end})
+	end
+	
+	Net.ButtonImage = function(tab, Title, Icon, c)
+		return	tab:Button({Title = Title, Icon = Icon, Callback = function()
+			c()
+		end})
+	end
 end
 
+
 task.spawn(function()
-	local Home = Window:Tab(translate("Home", "หน้าหลัก"))
-	local Ds = Home:Section(translate("Discord", "ดิสคอร์ด"), "l") do
-		Net.Text(Ds, translate("Please join my Discord If you join, I’ll be sooo happyyy Thank!!", "อย่าลืมเข้าดิสคอร์ดของเค้าหน่อยน้า ถ้าเข้า เค้าจะดีใจมากกกๆเลย >///< ขอบคุณล่วงหน้าน่ะค่ะะ"))
-		Ds:Button(translate("Discord", "ดิสคอร์ด"), function()
-			setclipboard('https://discord.gg/9ymQNuDbHs')
-		end)
-	end
-	local Performance = Home:Section(translate("Performance", "ประสิทธิภาพ"), "r") do
-		Net.Toggle(Performance, translate("White Screen", "เปิดจอขาว"), 'White Screen', function(v)
-			if v then
-				RunService:Set3dRenderingEnabled(false)
-			else
-				RunService:Set3dRenderingEnabled(true)
-			end
-		end)
-		Net.Toggle(Performance, translate("Fullbright", "เปิดแสงสว่าง"), 'Fullbright')
-		Performance:Button(translate("Boost CPU", "ทำให้ลื่นขึ้น"), function()
-			pcall(function()
-				local Terrain = workspace:FindFirstChildOfClass('Terrain')
-				Terrain.WaterWaveSize = 0
-				Terrain.WaterWaveSpeed = 0
-				Terrain.WaterReflectance = 0
-				Terrain.WaterTransparency = 0
-				game.Lighting.GlobalShadows = false
-				game.Lighting.FogEnd = 9e9
-				settings().Rendering.QualityLevel = 1
-				for i,v in pairs(game:GetDescendants()) do
-					if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-						v.Material = "Plastic"
-						v.Reflectance = 0
-					elseif v:IsA("Decal") then
-						v.Transparency = 1
-					elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-						v.Lifetime = NumberRange.new(0)
-					elseif v:IsA("Explosion") then
-						v.BlastPressure = 1
-						v.BlastRadius = 1
-					end
-				end
-				for i,v in pairs(Lighting:GetDescendants()) do
-					if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
-						v.Enabled = false
-					end
+	local Home = Window:Add({Title = translate("Home", "หน้าหลัก"),Desc = translate("Options", "ฟังชั่นที่หลากหลาย"),Icon = 81707063924327}) do
+		local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
+			Net.Toggle(Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
+				if v then
+					RunService:Set3dRenderingEnabled(false)
+				else
+					RunService:Set3dRenderingEnabled(true)
 				end
 			end)
-		end)
-	end
-
-	local Server = Home:Section(translate("Server", "เซิร์ฟเวอร์"), 'l') do
-		Net.default('Input JobID', JobId)
-		Server:Textbox({Value = "Input JobID", function(v)
-			Configs["Input JobID"] = v
-			Net.save("Input JobID", v)
-		end})
-		Server:Button(translate("Join", "เข้าร่วม"), function()
-			TeleportService:TeleportToPlaceInstance(PlaceId, Configs['Input JobID'], LocalPlayer)
-		end)
-		Server:Button(translate("Clipboard", "คัดลอก"), function()
-			setclipboard(JobId)
-		end)
-		Server:Button(translate("Rejoin", "รีจอยน์"), function()
-			Net.rejoin()
-		end)
-		Server:Button(translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
-			Net.s_hop()
-		end)
-	end
-
-	local PlayersSS = Home:Section(translate("Players", "ผู้เล่น"), 'l') do
-		Net.Text(PlayersSS, "All Players : N/A", function(v)
-			v:Title(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(255, 0, 127)))
-		end)
-
-		local AllPlayer = {}
-
-		for _, v in pairs(Players:GetPlayers()) do
-			if v ~= LocalPlayer and v.Character then
-				table.insert(AllPlayer, v.Name)
-			end
+			Net.Toggle(Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
+			Net.Button(Performance,translate("Boost FPS", "แก้แลค"), function()
+				pcall(function()
+					local Terrain = workspace:FindFirstChildOfClass('Terrain')
+					Terrain.WaterWaveSize = 0
+					Terrain.WaterWaveSpeed = 0
+					Terrain.WaterReflectance = 0
+					Terrain.WaterTransparency = 0
+					game.Lighting.GlobalShadows = false
+					game.Lighting.FogEnd = 9e9
+					settings().Rendering.QualityLevel = 1
+					for i,v in pairs(game:GetDescendants()) do
+						if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+							v.Material = "Plastic"
+							v.Reflectance = 0
+						elseif v:IsA("Decal") then
+							v.Transparency = 1
+						elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+							v.Lifetime = NumberRange.new(0)
+						elseif v:IsA("Explosion") then
+							v.BlastPressure = 1
+							v.BlastRadius = 1
+						end
+					end
+					for i,v in pairs(Lighting:GetDescendants()) do
+						if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+							v.Enabled = false
+						end
+					end
+				end)
+			end)
 		end
 
-		Net.default('Select Player', AllPlayer[1])
-		local PlayerDropdown = PlayersSS:Dropdown({Title = translate("Select Players", "เลือกผู้เล่น"),Multi = false,List = AllPlayer,Value = Configs['Select Player'],Callback = function(v)
-			Configs['Select Player'] = v
-			Net.save('Select Player', v)
-		end})
-		
-		PlayersSS:Button(translate("Refresh", "รีเฟรช"), function()
-			PlayerDropdown:Clear()
+		local Server = Home:Sec({Title = translate("Server", "เซิร์ฟเวอร์"), Side = "r"}) do
+			Net.default('Input JobID', JobId)
+			Server:Textbox({Value = Configs["Input JobID"], function(v)
+				Configs["Input JobID"] = v
+				Net.save("Input JobID", v)
+			end})
+			Net.Button(Server, translate("Join", "เข้าร่วม"), function()
+				TeleportService:TeleportToPlaceInstance(PlaceId, Configs['Input JobID'], LocalPlayer)
+			end)
+			Net.Button(Server, translate("Clipboard JobId", "คัดลอกไอดีเซิร์ฟเวอร์"), function()
+				setclipboard(JobId)
+			end)
+			Net.Button(Server, translate("Rejoin", "รีเจอย์"), function()
+				Net.rejoin()
+			end)
+			Net.Button(Server, translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
+				Net.s_hop()
+			end)
+		end
+
+		local PlayersSS = Home:Sec({Title = translate("Players", "ผู้เล่น"), Side = "l"}) do
+			Net.Text(PlayersSS, "All Players : N/A", function(v)
+				v:Title("All Players : " .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(134, 211, 255)))
+			end)
+
+			local AllPlayer = {}
+
 			for _, v in pairs(Players:GetPlayers()) do
 				if v ~= LocalPlayer and v.Character then
-					PlayerDropdown:AddList(v.Name)
+					table.insert(AllPlayer, v.Name)
 				end
 			end
-		end)
-		
-		PlayersSS:Button(translate("Teleport to Player", "เทเลพอร์ตไปหาผู้เล่น"), function()
-			pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character)
-		end)
 
-		Funcs['Tween Player'] = function(Value)
-			Net.loop(Value, 0.1, function()
-				pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character:GetPivot() + Vector3.new(0, 40, 0))
-			end, function()
-				return not Value
+			Net.default('Select Player', AllPlayer[1])
+			local PlayerDropdown = PlayersSS:Dropdown({Title = translate("Select Player", "เลือกผู้เล่น"),Multi = false,List = AllPlayer,Value = Configs['Select Player'],Callback = function(v)
+				Configs['Select Player'] = v
+				Net.save('Select Player', v)
+			end})
+
+			PlayersSS:Button({Title = translate("Refresh", "รีเฟรช"), Callback = function()
+				PlayerDropdown:Clear()
+				for _, v in pairs(Players:GetPlayers()) do
+					if v ~= LocalPlayer and v.Character then
+						PlayerDropdown:AddList(v.Name)
+					end
+				end
+			end})
+
+			PlayersSS:Button({Title = translate("Teleport", "เทเลพอร์ต"), Callback = function()
+				pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]).Character)
+			end})
+
+			Funcs['Tween Player'] = function(Value)
+				Net.loop(Value, 0.1, function()
+					pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]).Character:GetPivot() + Vector3.new(0, 40, 0))
+				end, function()
+					return not Value
+				end)
+			end
+
+			Net.Toggle(PlayersSS, translate("Tween to Player", "บินไปหาผู้เล่น"), 'Tween Player')
+			Net.Toggle(PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player', function(v)
+				if v then
+					Camera.CameraSubject = Players:FindFirstChild(Configs["Select Player"]).Character
+				else
+					Camera.CameraSubject = Humanoid
+				end
 			end)
 		end
 
-		Net.Toggle(PlayersSS, translate("Tween to Player", "บินไปหาผู้เล่น"), 'Tween Player')
-		Net.Toggle(PlayersSS, translate("View Players", "ดูผู้เล่น"), 'View Player', function(v)
-			if v then
-				Camera.CameraSubject = Players:FindFirstChild(Configs["Select Player"]) and Players[Configs["Select Player"]].Character
-			else
-				Camera.CameraSubject = Humanoid
-			end
-		end)
-	end
+		local Power = Home:Sec({Title = translate("Powers", "ความสามารถพิเศษ"), Side = "r"}) do
+			local OldSpeed = Humanoid.WalkSpeed
+			Net.default('Walkspeed', Humanoid.WalkSpeed)
 
-	local Power = Home:Section(translate("Powers", "พลัง"), 'r') do
-		local OldSpeed = Humanoid.WalkSpeed
-		Net.default('Walkspeed', Humanoid.WalkSpeed)
-
-		local CFloop
-		Power:Toggle(translate("CFLY", "บินถอดวิญญาณ"), false, function(v)
-			if v then
-				Humanoid.PlatformStand = true
-				local Head = Character:WaitForChild("Head")
-				Head.Anchored = true
-				if CFloop then CFloop:Disconnect() end
-				CFloop = RunService.Heartbeat:Connect(function(deltaTime)
-					local moveDirection = Character:FindFirstChildOfClass('Humanoid').MoveDirection * (100 * deltaTime)
-					local headCFrame = Head.CFrame
-					local cameraCFrame = workspace.CurrentCamera.CFrame
-					local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
-					cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
-					local cameraPosition = cameraCFrame.Position
-					local headPosition = headCFrame.Position
-
-					local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
-					Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
-				end)
-			else
-				if CFloop then
-					CFloop:Disconnect()
-					Humanoid.PlatformStand = false
+			local CFloop
+			Power:Toggle({Title = "CFLY", Value = false, Callback = function(v)
+				if v then
+					Humanoid.PlatformStand = true
 					local Head = Character:WaitForChild("Head")
-					Head.Anchored = false
+					Head.Anchored = true
+					if CFloop then CFloop:Disconnect() end
+					CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+						local moveDirection = Character:FindFirstChildOfClass('Humanoid').MoveDirection * (100 * deltaTime)
+						local headCFrame = Head.CFrame
+						local cameraCFrame = workspace.CurrentCamera.CFrame
+						local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+						cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+						local cameraPosition = cameraCFrame.Position
+						local headPosition = headCFrame.Position
+
+						local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+						Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+					end)
+				else
+					if CFloop then
+						CFloop:Disconnect()
+						Humanoid.PlatformStand = false
+						local Head = Character:WaitForChild("Head")
+						Head.Anchored = false
+					end
 				end
-			end
-		end)
+			end})
 
-		Power:Slider({Title = translate("Speed", "ความเร็ว"),Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
-			Configs['Walkspeed'] = v
-			Net.save('Walkspeed', v)
-			Humanoid.WalkSpeed = v
-		end})
+			Power:Slider({Title = "Speed",Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
+				Configs['Walkspeed'] = v
+				Net.save('Walkspeed', v)
+				Humanoid.WalkSpeed = v
+			end})
 
-		Power:Button(translate("Change to Old Walkspeed", "ปรับให้ความเร็วเท่าเดิม"), function()
-			Humanoid.WalkSpeed = OldSpeed
-		end)
+			Net.Button(Power, "Change to Old Walkspeed", function()
+				Humanoid.WalkSpeed = OldSpeed
+			end)
 
-		LocalPlayer.CharacterAdded:Connect(function(char)
-			char:WaitForChild("Humanoid").WalkSpeed = Configs['Walkspeed']
-		end)
-	end
+			LocalPlayer.CharacterAdded:Connect(function(char)
+				char:WaitForChild("Humanoid").WalkSpeed = Configs['Walkspeed']
+			end)
+		end
 
-	local Config = Home:Section(translate("Configs", "คอนฟิก"), 'r') do
-		Net.Toggle(Config, translate("Keep Script", "รันอัตโนมัติ"), 'Keep Script')
-		Config:Button(translate("Reset Configs", "รีเซ็ตการตั้งค่า"), function()
-			delfile(Folder)
-		end)
+		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "l"}) do
+			Net.Toggle(Config, "Keep Script", 'Keep Script')
+			Net.Button(Config, "Reset Configs", function()
+				delfile(Folder)
+			end)
+		end
 	end
 end)
 
@@ -767,9 +818,9 @@ do
 		if Configs['Keep Script'] and (not TeleportCheck) and queueonteleport then
 			TeleportCheck = true
 			print('Success')
-			queueonteleport(Configs['buffer'])
+			queueonteleport(Env['buffer'])
 		end
 	end)
 end
 
-return {Net;Funcs;Env;Configs;Window;translate;Players;LocalPlayer;ReplicatedStorage}
+return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage}
