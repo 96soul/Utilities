@@ -720,7 +720,7 @@ end)
 
 do
 
-	_G.NormalLightingSettings = {
+	Env.NormalLightingSettings = {
 		Brightness = Lighting.Brightness,
 		ClockTime = Lighting.ClockTime,
 		FogEnd = Lighting.FogEnd,
@@ -729,8 +729,8 @@ do
 	}
 
 	Lighting:GetPropertyChangedSignal("Brightness"):Connect(function()
-		if Lighting.Brightness ~= 1 and Lighting.Brightness ~= _G.NormalLightingSettings.Brightness then
-			_G.NormalLightingSettings.Brightness = Lighting.Brightness
+		if Lighting.Brightness ~= 1 and Lighting.Brightness ~= Env.NormalLightingSettings.Brightness then
+			Env.NormalLightingSettings.Brightness = Lighting.Brightness
 			if not Configs['Fullbright'] then
 				repeat
 					wait()
@@ -741,8 +741,8 @@ do
 	end)
 
 	Lighting:GetPropertyChangedSignal("ClockTime"):Connect(function()
-		if Lighting.ClockTime ~= 12 and Lighting.ClockTime ~= _G.NormalLightingSettings.ClockTime then
-			_G.NormalLightingSettings.ClockTime = Lighting.ClockTime
+		if Lighting.ClockTime ~= 12 and Lighting.ClockTime ~= Env.NormalLightingSettings.ClockTime then
+			Env.NormalLightingSettings.ClockTime = Lighting.ClockTime
 			if not Configs['Fullbright'] then
 				repeat
 					wait()
@@ -753,8 +753,8 @@ do
 	end)
 
 	Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
-		if Lighting.FogEnd ~= 786543 and Lighting.FogEnd ~= _G.NormalLightingSettings.FogEnd then
-			_G.NormalLightingSettings.FogEnd = Lighting.FogEnd
+		if Lighting.FogEnd ~= 786543 and Lighting.FogEnd ~= Env.NormalLightingSettings.FogEnd then
+			Env.NormalLightingSettings.FogEnd = Lighting.FogEnd
 			if not Configs['Fullbright'] then
 				repeat
 					wait()
@@ -765,8 +765,8 @@ do
 	end)
 
 	Lighting:GetPropertyChangedSignal("GlobalShadows"):Connect(function()
-		if Lighting.GlobalShadows ~= false and Lighting.GlobalShadows ~= _G.NormalLightingSettings.GlobalShadows then
-			_G.NormalLightingSettings.GlobalShadows = Lighting.GlobalShadows
+		if Lighting.GlobalShadows ~= false and Lighting.GlobalShadows ~= Env.NormalLightingSettings.GlobalShadows then
+			Env.NormalLightingSettings.GlobalShadows = Lighting.GlobalShadows
 			if not Configs['Fullbright'] then
 				repeat
 					wait()
@@ -777,8 +777,8 @@ do
 	end)
 
 	Lighting:GetPropertyChangedSignal("Ambient"):Connect(function()
-		if Lighting.Ambient ~= Color3.fromRGB(178, 178, 178) and Lighting.Ambient ~= _G.NormalLightingSettings.Ambient then
-			_G.NormalLightingSettings.Ambient = Lighting.Ambient
+		if Lighting.Ambient ~= Color3.fromRGB(178, 178, 178) and Lighting.Ambient ~= Env.NormalLightingSettings.Ambient then
+			Env.NormalLightingSettings.Ambient = Lighting.Ambient
 			if not Configs['Fullbright'] then
 				repeat
 					wait()
@@ -798,11 +798,11 @@ do
 	Net.again(function()
 		if Configs['Fullbright'] ~= LatestValue then
 			if not Configs['Fullbright'] then
-				Lighting.Brightness = _G.NormalLightingSettings.Brightness
-				Lighting.ClockTime = _G.NormalLightingSettings.ClockTime
-				Lighting.FogEnd = _G.NormalLightingSettings.FogEnd
-				Lighting.GlobalShadows = _G.NormalLightingSettings.GlobalShadows
-				Lighting.Ambient = _G.NormalLightingSettings.Ambient
+				Lighting.Brightness = Env.NormalLightingSettings.Brightness
+				Lighting.ClockTime = Env.NormalLightingSettings.ClockTime
+				Lighting.FogEnd = Env.NormalLightingSettings.FogEnd
+				Lighting.GlobalShadows = Env.NormalLightingSettings.GlobalShadows
+				Lighting.Ambient = Env.NormalLightingSettings.Ambient
 			else
 				Lighting.Brightness = 1
 				Lighting.ClockTime = 12
