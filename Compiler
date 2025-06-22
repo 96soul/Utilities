@@ -12,16 +12,25 @@ local Configs: SharedTable = {} or { ... };
 local Net: SharedTable = {} Net.__index = Net;
 local Funcs: SharedTable = {} or { ... };
 local META = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
-local Main = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main"))()
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
-local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor())) --if Env._ then return end Env._ = true
-request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
+local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor())) if Env._ then return end Env._ = true
+local blankfunction = function(...) return ... end
+local clonefunction = clonefunction and clonefunction(clonefunction) and blankfunction
+local request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
+local refs: SharedTable = {
+	request = clonefunction(request),
+}
+
+local Main = loadstring(refs.request({
+	Url = "https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main",
+	Method = "GET",
+}).Body)()
 
 GetSize = function()
 	if UserInputService.KeyboardEnabled then
-		return UDim2.new(0, 915, 0, 815)
+		return UDim2.new(0, 750, 0, 800)
 	else
-		return UDim2.new(0, 600, 0, 500)
+		return UDim2.new(0, 500, 0, 350)
 	end
 end
 
@@ -108,28 +117,6 @@ do
 		return hookfunction(a, function() return end)
 	end
 
-	Net.require = function(path: ModuleScript)
-		if typeof(path) ~= 'Instance' or path.ClassName ~= 'ModuleScript' then
-			error('attempt to require a ModuleScript: Is not Module Script')
-		end
-
-		if not Blacklist_Executor then return require(path) end
-
-		local oIdentity = syn.get_thread_identity()
-		syn.set_thread_identity(2)
-		local g, res = pcall(require, path)
-		syn.set_thread_identity(oIdentity)
-		if not g then
-			error(res)
-		end
-
-		return res
-	end
-
-	Net.getenv = function(v: LocalScript)
-		return getsenv(v)
-	end
-
 	Net.ontrash = function(name: string)
 		for _, v in pairs(getgc(true)) do
 			if typeof(v) == "function" and islclosure(v) then
@@ -185,26 +172,6 @@ do
 
 	Net.alive = function(v: Model | Instance | any)
 		return typeof(v) == "Instance"and v:IsA("Model")and v:FindFirstChild("Humanoid") and v:FindFirstChild("Humanoid").Health > 0;
-	end
-
-	Net.touchconnect = function(v: BasePart)
-		if not v:IsA("BasePart") then return end
-		firetouchinterest(HumanoidRootPart, v, 1)
-		firetouchinterest(HumanoidRootPart, v, 0)
-	end
-
-	Net.prompt = function(v: ProximityPrompt)
-		if not v:IsA("ProximityPrompt") then return end
-		fireproximityprompt(v)
-	end
-
-	Net.clickdector = function(v: ClickDetector)
-		if not v:IsA("ClickDetector") then return end
-		fireclickdetector(v)
-	end
-
-	Net.render = function()
-		return Heartbeat:Wait()
 	end
 
 	Net.html = function(text: string, color: Color3)
@@ -286,13 +253,12 @@ do
 	end
 
 	Net.closet_mobs = function(v: Folder | any?)
-		local closest, dist, hp = nil, math.huge, math.huge
+		local closest, dist = nil, math.huge
 		for _, mob in ipairs(v:GetChildren()) do
 			if mob:IsA("Model") and Net.alive(mob) then
 				local d = Net.distance(mob)
-				local h = mob:FindFirstChild("Humanoid").Health
-				if d < dist or (d == dist and h < hp) then
-					dist, hp, closest = d, h, mob
+				if d < dist then
+					dist, closest = d, mob
 				end
 			end
 		end
@@ -300,63 +266,20 @@ do
 	end
 
 	Net.closet_players = function()
-		local closest, dist, hp = nil, math.huge, math.huge
+		local closest, dist = nil, math.huge
 		for _, player in ipairs(Players:GetPlayers()) do
 			if player ~= LocalPlayer and player.Character and Net.alive(player.Character) then
 				local d = Net.distance(player.Character)
-				local h = player.Character:FindFirstChild("Humanoid").Health
-				if d < dist or (d == dist and h < hp) then
-					dist, hp, closest = d, h, player
+				if d < dist then
+					dist, closest = d, player
 				end
 			end
 		end
-		return closest;
-	end
-
-	Net.equip = function(Tool: Tool | string)
-		if not Character then return end
-		return Humanoid:EquipTool(Tool)
+		return closest
 	end
 
 	Net.have = function(v)
 		return Character:FindFirstChild(v) or Backpack:FindFirstChild(v)
-	end
-
-	Net.request = function(url, meta)
-		local msg = {
-			username = meta.username,
-			embeds = {{
-				title = meta.title,
-				color = 65280,
-				fields = meta.fields,
-				image = {
-					url = meta.image
-				}
-			}}
-		}
-
-		request({
-			Url = url,
-			Method = "POST",
-			Headers = {
-				["Content-Type"] = "application/json"
-			},
-			Body = HttpService:JSONEncode(msg)
-		})
-
-		--[[
-		
-		Net.request("https://discord.com/api/webhooks/xxxxxxxxx", {
-		username = "ระบบแจ้งเตือน",
-		title = "มีผู้เล่นเข้าสู่ระบบ",
-		fields = {
-			{ name = "ชื่อผู้เล่น", value = "Player123", inline = true },
-			{ name = "เวลา", value = "12:00", inline = true }
-		},
-			image = "https://example.com/image.png"
-		})
-		
-		]]
 	end
 
 	Net.load = function()
@@ -385,35 +308,6 @@ do
 		else
 			while true do end
 		end
-	end
-
-	Env.c = function(f: Folder)
-		if not f then return end
-		for _, v in pairs(f:GetChildren()) do
-			return v
-		end
-	end
-
-	Env.d = function(f: Folder)
-		if not f then return end
-		for _, v in ipairs(f:GetDescendants()) do
-			return v
-		end
-	end
-
-	Env.t = function(f: Folder)
-		if not f or type(f) ~= 'table' then return end
-		for _, v in pairs(f) do
-			return v
-		end
-	end
-
-	Env.f = function(n: Instance ,i: string, d: boolean)
-		return (d and d ~= nil and n:FindFirstChild((i and tostring(i)), true)) or n:FindFirstChild(i and tostring(i))
-	end
-
-	Env.fc = function(n: Instance ,i: string, d: boolean)
-		return (d and d ~= nil and n:FindFirstChildOfClass((i and tostring(i)), true)) or n:FindFirstChildOfClass(i and tostring(i))
 	end
 
 	Net.round = function(n: number)
@@ -640,7 +534,12 @@ task.spawn(function()
 			end})
 
 			PlayersSS:Button({Title = translate("Teleport", "เทเลพอร์ต"), Callback = function()
-				pcall(Net.tp, Players:FindFirstChild(Configs["Select Player"]).Character)
+				pcall(function()
+					local player = Players:FindFirstChild(Configs["Select Player"])
+					if player and player.Character then
+						Net.tp(player.Character)
+					end
+				end)
 			end})
 
 			Funcs['Tween Player'] = function(Value)
@@ -709,7 +608,7 @@ task.spawn(function()
 			end)
 		end
 
-		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "l"}) do
+		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
 			Net.Toggle(Config, "Keep Script", 'Keep Script')
 			Net.Button(Config, "Reset Configs", function()
 				delfile(Folder)
@@ -719,7 +618,6 @@ task.spawn(function()
 end)
 
 do
-
 	Env.NormalLightingSettings = {
 		Brightness = Lighting.Brightness,
 		ClockTime = Lighting.ClockTime,
