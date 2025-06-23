@@ -538,7 +538,12 @@ task.spawn(function()
 
 			Funcs['Tween Player'] = function(Value)
 				Net.loop(Value, 0.1, function()
-					pcall(Net.tween, Players:FindFirstChild(Configs["Select Player"]).Character:GetPivot() + Vector3.new(0, 40, 0))
+					pcall(function()
+						local player = Players:FindFirstChild(Configs["Select Player"])
+						if player and player.Character then
+							Net.tween(player.Character:GetPivot())
+						end
+					end)
 				end, function()
 					return not Value
 				end)
