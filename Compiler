@@ -214,16 +214,18 @@ do
 				if tw then
 					tw:Cancel()
 				end
-				if HumanoidRootPart:FindFirstChild("BodyVelocity222") then
-					HumanoidRootPart:FindFirstChild("BodyVelocity222"):Destroy()
-				end 
 			end
 			return tw:Play()
 		end
 	end
 
 	Net.stoptw = function(v)
-		if not v then pcall(S) end
+		if not v then 
+			if HumanoidRootPart:FindFirstChild("BodyVelocity222") then
+				HumanoidRootPart:FindFirstChild("BodyVelocity222"):Destroy()
+			end 
+			pcall(S)
+		end
 	end
 
 	Net.tp = function(pos: any, v: boolean)
@@ -448,34 +450,51 @@ task.spawn(function()
 			end)
 			Net.Toggle(Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
 			Net.Button(Performance,translate("Boost FPS", "แก้แลค"), function()
-				pcall(function()
-					local Terrain = workspace:FindFirstChildOfClass('Terrain')
-					Terrain.WaterWaveSize = 0
-					Terrain.WaterWaveSpeed = 0
-					Terrain.WaterReflectance = 0
-					Terrain.WaterTransparency = 0
-					game.Lighting.GlobalShadows = false
-					game.Lighting.FogEnd = 9e9
-					settings().Rendering.QualityLevel = 1
-					for i,v in pairs(game:GetDescendants()) do
-						if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-							v.Material = "Plastic"
-							v.Reflectance = 0
-						elseif v:IsA("Decal") then
-							v.Transparency = 1
-						elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-							v.Lifetime = NumberRange.new(0)
-						elseif v:IsA("Explosion") then
-							v.BlastPressure = 1
-							v.BlastRadius = 1
-						end
-					end
-					for i,v in pairs(Lighting:GetDescendants()) do
-						if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
-							v.Enabled = false
-						end
-					end
-				end)
+				Window:Dialog({
+					Title = translate("Warning", "คำเตือน"),
+					Content = translate("Boost FPS.", "แก้แลค ถ้ากดตกลงเกมจะค้างแปบนึ่ง"),
+					Button = {
+						{
+							Title = translate("Continue", "ตกลง"),
+							Callback = function()
+								pcall(function()
+									local Terrain = workspace:FindFirstChildOfClass('Terrain')
+									Terrain.WaterWaveSize = 0
+									Terrain.WaterWaveSpeed = 0
+									Terrain.WaterReflectance = 0
+									Terrain.WaterTransparency = 0
+									game.Lighting.GlobalShadows = false
+									game.Lighting.FogEnd = 9e9
+									settings().Rendering.QualityLevel = 1
+									for i,v in pairs(game:GetDescendants()) do
+										if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+											v.Material = "Plastic"
+											v.Reflectance = 0
+										elseif v:IsA("Decal") then
+											v.Transparency = 1
+										elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+											v.Lifetime = NumberRange.new(0)
+										elseif v:IsA("Explosion") then
+											v.BlastPressure = 1
+											v.BlastRadius = 1
+										end
+									end
+									for i,v in pairs(Lighting:GetDescendants()) do
+										if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+											v.Enabled = false
+										end
+									end
+								end)
+							end
+						},
+						{
+							Title = translate("Cancel", "ยกเลิก"),
+							Callback = function()
+								return
+							end
+						}
+					}
+				})
 			end)
 		end
 
@@ -492,10 +511,44 @@ task.spawn(function()
 				setclipboard(JobId)
 			end)
 			Net.Button(Server, translate("Rejoin", "รีเจอย์"), function()
-				Net.rejoin()
+				Window:Dialog({
+					Title = translate("Warning", "คำเตือน"),
+					Content = translate("Want to Rejoin Server.", "อยากรีเซิฟมั้ย"),
+					Button = {
+						{
+							Title = translate("Continue", "ตกลง"),
+							Callback = function()
+								Net.rejoin()
+							end
+						},
+						{
+							Title = translate("Cancel", "ยกเลิก"),
+							Callback = function()
+								return
+							end
+						}
+					}
+				})
 			end)
 			Net.Button(Server, translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
-				Net.s_hop()
+				Window:Dialog({
+					Title = translate("Warning", "คำเตือน"),
+					Content = translate("Want to Change Server.", "อยากย้ายเซิฟมั้ย"),
+					Button = {
+						{
+							Title = translate("Continue", "ตกลง"),
+							Callback = function()
+								Net.s_hop()
+							end
+						},
+						{
+							Title = translate("Cancel", "ยกเลิก"),
+							Callback = function()
+								return
+							end
+						}
+					}
+				})
 			end)
 		end
 
@@ -610,7 +663,24 @@ task.spawn(function()
 		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
 			Net.Toggle(Config, "Keep Script", 'Keep Script')
 			Net.Button(Config, "Reset Configs", function()
-				delfile(Folder)
+				Window:Dialog({
+					Title = translate("Warning", "คำเตือน"),
+					Content = translate("if you continue your settings will reset to officails setting.", "ถ้าคุณตกลงการตั้งค่าที่คุณเปิดไว้เช่น เปิดออโต้ย้ายเซิฟหาบอสไว้ ถ้ากดตกลง ออโต้ย้ายเซิฟหาบอสก็จะถูกปิด"),
+					Button = {
+						{
+							Title = translate("Continue", "ตกลง"),
+							Callback = function()
+								delfile(Folder)
+							end
+						},
+						{
+							Title = translate("Cancel", "ยกเลิก"),
+							Callback = function()
+								return
+							end
+						}
+					}
+				})
 			end)
 		end
 	end
