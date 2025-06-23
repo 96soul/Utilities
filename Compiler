@@ -17,14 +17,8 @@ local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, 
 local blankfunction = function(...) return ... end
 local clonefunction = clonefunction and clonefunction(clonefunction) and blankfunction
 local request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
-local refs: SharedTable = {
-	request = clonefunction(request),
-}
-
-local Main = loadstring(refs.request({
-	Url = "https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main",
-	Method = "GET",
-}).Body)()
+local real_request = clonefunction(request)
+local Main = loadstring(real_request({Url = "http://fetching.mywebcommunity.org/files/v1/Library.Lua",Method = "GET",}).Body)()
 
 GetSize = function()
 	if UserInputService.KeyboardEnabled then
@@ -721,4 +715,4 @@ do
 	end)
 end
 
-return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage}
+return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage;real_request}
