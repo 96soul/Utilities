@@ -18,7 +18,7 @@ local blankfunction = function(...) return ... end
 local clonefunction = clonefunction and clonefunction(clonefunction) and blankfunction
 local request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
 local real_request = clonefunction(request)
-local Main = loadstring(real_request({Url = "http://fetching.mywebcommunity.org/files/v1/Library.Lua",Method = "GET",}).Body)()
+local Main = loadstring(real_request({Url = "https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main",Method = "GET",}).Body)()
 
 GetSize = function()
 	if UserInputService.KeyboardEnabled then
@@ -617,7 +617,7 @@ task.spawn(function()
 			Net.default('Walkspeed', Humanoid.WalkSpeed)
 
 			local CFloop
-			Power:Toggle({Title = "CFLY", Value = false, Callback = function(v)
+			Power:Toggle({Title = translate("CFLY", "ถอดวิญญาณ"), Value = false, Callback = function(v)
 				if v then
 					Humanoid.PlatformStand = true
 					local Head = Character:WaitForChild("Head")
@@ -645,13 +645,13 @@ task.spawn(function()
 				end
 			end})
 
-			Power:Slider({Title = "Speed",Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
+			Power:Slider({Title = translate("Speed", "ความเร็ว"),Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
 				Configs['Walkspeed'] = v
 				Net.save('Walkspeed', v)
 				Humanoid.WalkSpeed = v
 			end})
 
-			Net.Button(Power, "Change to Old Walkspeed", function()
+			Net.Button(Power, translate("Change to Old Walkspeed", "คืนค่าความเร็ว"), function()
 				Humanoid.WalkSpeed = OldSpeed
 			end)
 
@@ -661,7 +661,8 @@ task.spawn(function()
 		end
 
 		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
-			Net.Toggle(Config, "Keep Script", 'Keep Script')
+			Net.Toggle(Config, translate("Keep Script", "Keep Script"), 'Keep Script')
+			Net.Toggle(Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "Thailand"), 'Thailand')
 			Net.Button(Config, "Reset Configs", function()
 				Window:Dialog({
 					Title = translate("Warning", "คำเตือน"),
