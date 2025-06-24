@@ -20,24 +20,6 @@ local request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,set
 local real_request = clonefunction(request)
 local Main = loadstring(real_request({Url = "https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main",Method = "GET",}).Body)()
 
-GetSize = function()
-	if UserInputService.KeyboardEnabled then
-		return UDim2.new(0, 750, 0, 800)
-	else
-		return UDim2.new(0, 500, 0, 350)
-	end
-end
-
-local Window = Main.new({
-	Logo = 128185233852701,
-	Title = "Fetching's Official",
-	Desc = "by @96soul",
-	Discord = "https://discord.gg/BHpSEz2nzV",
-	KeyEnabled = false,
-	Key = "fetching.gg/2025",
-	Size = GetSize()
-})
-
 translate = function(en, th)
 	if Configs['Thailand'] then
 		return tostring(th)
@@ -66,7 +48,7 @@ do
 			end
 		end)
 	end
-
+	
 	Net.save = function(key: string, value: boolean | string | number | table | any)
 		if key ~= nil then Configs[key] = value;end
 		if not isfolder("Fetching'Script") then makefolder("Fetching'Script");end
@@ -438,7 +420,45 @@ do
 end
 
 
+Net.default('X', 0)
+Net.default('Y', 0)
+
+CheckSize = function()
+	if Configs['Size'] then
+		if Configs['X'] == 0 and Configs['Y'] == 0 then
+			if UserInputService.KeyboardEnabled then
+				return UDim2.new(0, 750, 0, 800)
+			else
+				return UDim2.new(0, 500, 0, 350)
+			end
+		else
+			return UDim2.new(0, Configs['X'], 0, Configs['Y'])
+		end
+	end
+end
+
+local Window = Main.new({
+	Logo = 128185233852701,
+	Title = "Fetching's Official",
+	Desc = "by @96soul",
+	Discord = "https://discord.gg/BHpSEz2nzV",
+	KeyEnabled = false,
+	Key = "fetching.gg/2025",
+	Size = CheckSize()
+})
+
+repeat wait() until game:GetService("CoreGui").lnwza.Background
+
+do
+	game:GetService("CoreGui").lnwza.Background:GetPropertyChangedSignal("Size"):Connect(function()
+		local size = game:GetService("CoreGui").lnwza.Background.Size
+		Net.save('X', size.X.Offset)
+		Net.save('Y', size.Y.Offset)
+	end)
+end
+
 task.spawn(function()
+	
 	local Home = Window:Add({Title = translate("Home", "หน้าหลัก"),Desc = translate("Options", "ฟังชั่นที่หลากหลาย"),Icon = 81707063924327}) do
 		local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
 			Net.Toggle(Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
@@ -781,6 +801,7 @@ do
 			LatestValue = not LatestValue
 		end
 	end)
+	
 	local TeleportCheck = false
 	LocalPlayer.OnTeleport:Connect(function(State)
 		if Configs['Keep Script'] and (not TeleportCheck) and queueonteleport then
