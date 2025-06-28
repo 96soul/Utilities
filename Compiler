@@ -417,6 +417,10 @@ do
 			c()
 		end})
 	end
+	
+	Net.getplacename = function(a: PlaceId)
+		return tostring(MarketplaceService:GetProductInfo(a).Name)
+	end
 end
 
 
@@ -424,16 +428,14 @@ Net.default('X', 0)
 Net.default('Y', 0)
 
 CheckSize = function()
-	if Configs['Size'] then
-		if Configs['X'] == 0 and Configs['Y'] == 0 then
-			if UserInputService.KeyboardEnabled then
-				return UDim2.new(0, 750, 0, 800)
-			else
-				return UDim2.new(0, 500, 0, 350)
-			end
+	if Configs['X'] == 0 and Configs['Y'] == 0 then
+		if UserInputService.KeyboardEnabled then
+			return UDim2.new(0, 750, 0, 800)
 		else
-			return UDim2.new(0, Configs['X'], 0, Configs['Y'])
+			return UDim2.new(0, 500, 0, 350)
 		end
+	else
+		return UDim2.new(0, Configs['X'], 0, Configs['Y'])
 	end
 end
 
@@ -443,7 +445,6 @@ local Window = Main.new({
 	Desc = "by @96soul",
 	Discord = "https://discord.gg/BHpSEz2nzV",
 	KeyEnabled = false,
-	Key = "fetching.gg/2025",
 	Size = CheckSize()
 })
 
