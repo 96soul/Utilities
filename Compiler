@@ -442,7 +442,7 @@ end
 local Window = Main.new({
 	Logo = 128185233852701,
 	Title = "Fetching's Official",
-	Desc = "by @96soul",
+	Desc = "by #96soul and @airiyaa.dev",
 	Discord = "https://discord.gg/BHpSEz2nzV",
 	KeyEnabled = false,
 	Size = CheckSize()
