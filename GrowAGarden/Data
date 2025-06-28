@@ -130,7 +130,9 @@ local Data = {} do
 		"Noble Flower",
 		"Traveler's Fruit",
 		"Ice Cream Bean",
-		"Lime"
+		"Lime",
+		"PitcherPlant",
+		"Rafflesia"
 	}
 
 	Data.GearList = {
@@ -149,7 +151,7 @@ local Data = {} do
 	}
 	
 	Data.SummerFruit = {
-		"Banana", "Tomato", "Carrot", "Wild Carrot", "Blueberry", "Strawberry", "Pear", "Cauliflower", "Cantaloupe", "Watermelon", "GreenApple", "Avocado", "Pineapple", "Kiwi", "BellPepper", "PricklyPear", "ParasolFlower", "SugarApple", "ElephantEars"
+		"Banana", "Tomato", "Carrot", "Wild Carrot", "Blueberry", "Strawberry", "Pear", "Cauliflower", "Cantaloupe", "Watermelon", "GreenApple", "Avocado", "Pineapple", "Kiwi", "BellPepper", "PricklyPear", "ParasolFlower", "SugarApple", "ElephantEars", "Rafflesia", "PitcherPlant"
 	}
 end
 
