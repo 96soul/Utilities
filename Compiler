@@ -442,7 +442,7 @@ end
 local Window = Main.new({
 	Logo = 128185233852701,
 	Title = "Fetching's Official",
-	Desc = "by #96soul and @airiyaa.dev",
+	Desc = "by @96soul",
 	Discord = "https://discord.gg/DXQsunUuRR",
 	KeyEnabled = false,
 	Size = CheckSize()
@@ -461,6 +461,12 @@ end
 task.spawn(function()
 	
 	local Home = Window:Add({Title = translate("Home", "หน้าหลัก"),Desc = translate("Options", "ฟังชั่นที่หลากหลาย"),Icon = 81707063924327}) do
+		local Hwid = Home:Sec({Title = translate("Hwid", "Hwid"), Side = "l"}) do
+			Net.Text(Hwid, translate("Join Discord to Verify Hwid", "เข้าร่วมดิสคอร์ดเพื่อยืนยัน Hwid"))
+			Net.Button(Hwid,translate("Copy Hwid", "คัดลอกโค้ดยืนยันตัวตน"), function()
+				setclipboard(game:GetService("RbxAnalyticsService"):GetClientId())
+			end)
+		end
 		local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
 			Net.Toggle(Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
 				if v then
