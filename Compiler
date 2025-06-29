@@ -688,8 +688,8 @@ task.spawn(function()
 		end
 
 		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
-			Net.Toggle(Config, translate("Keep Script", "Keep Script"), 'Keep Script')
-			Net.Toggle(Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "Thailand"), 'Thailand')
+			Net.Toggle(Config, translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), 'Keep Script')
+			Net.Toggle(Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "English [Enable and rejoin] "), 'Thailand')
 			Net.Button(Config, "Reset Configs", function()
 				Window:Dialog({
 					Title = translate("Warning", "คำเตือน"),
@@ -813,8 +813,7 @@ do
 	LocalPlayer.OnTeleport:Connect(function(State)
 		if Configs['Keep Script'] and (not TeleportCheck) and queueonteleport then
 			TeleportCheck = true
-			print('Success')
-			queueonteleport(Env['buffer'])
+			queueonteleport("loadstring(game:HttpGet('https://github.com/96soul/-/blob/main/load.gg?raw=true', true))()")
 		end
 	end)
 end
