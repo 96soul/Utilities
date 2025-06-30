@@ -561,7 +561,7 @@ task.spawn(function()
 		local PlayersSS = Home:Sec({Title = translate("Players", "ผู้เล่น"), Side = "l"}) do
 			local PlayersAll = PlayersSS:Label(translate("All Players : ", "ผู้เล่นทั้งหมด : "))
 			Net.again(function()
-				PlayersAll:Title(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(134, 211, 255)))
+				PlayersAll:Set(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(134, 211, 255)))
 			end)
 
 			local AllPlayer = {}
