@@ -472,7 +472,10 @@ task.spawn(function()
 			end})
 			Net.Toggle(PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player', function(v)
 				if v then
-					Camera.CameraSubject = Players:FindFirstChild(Configs["Select Player"]).Character
+					local player = Players:FindFirstChild(Configs["Select Player"])
+					if player and player.Character then
+						Camera.CameraSubject = player.Character
+					end
 				else
 					Camera.CameraSubject = Humanoid
 				end
