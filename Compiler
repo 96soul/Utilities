@@ -375,6 +375,10 @@ do
 	end)
 end
 
+Label = function(p, t)
+	return p:Label(t)
+end
+
 task.spawn(function()
 	local Home = Window:Add({Title = translate("Home", "หน้าหลัก"),Desc = translate("Options", "ฟังชั่นที่หลากหลาย"),Icon = 81707063924327}) do
 		local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
@@ -653,4 +657,4 @@ do
 	end)
 end
 
-return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage}
+return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage;Label}
