@@ -15,10 +15,8 @@ local META = setmetatable({}, {__index = function(_, key) return cloneref(game:G
 local Players, VirtualInputManager, CollectionService, ReplicatedStorage, TeleportService, RunService, VirtualUser, HttpService, TweenService, BadgeService, Chat, SoundService, Lighting, LocalizationService, PathfindingService, MarketplaceService, Stats, DataStoreService, Teams, StarterGui, StarterPack, StarterPlayer, UserInputService, GuiService, ContextActionService, ProximityPromptService, VoiceChatService = META.Players, META.VirtualInputManager, META.CollectionService, META.ReplicatedStorage, META.TeleportService, META.RunService, META.VirtualUser, META.HttpService, META.TweenService, META.BadgeService, META.Chat, META.SoundService, META.Lighting, META.LocalizationService, META.PathfindingService, META.MarketplaceService, META.Stats, META.DataStoreService, META.Teams, META.StarterGui, META.StarterPack, META.StarterPlayer, META.UserInputService, META.GuiService, META.ContextActionService, META.ProximityPromptService, META.VoiceChatService
 local PlaceId, JobId, Camera, Tick, Players, RunService, LocalPlayer, Backpack, PlayerGui, PlayerScript, Name, DisplayName, PlayerId, Team, Folder, Character, HumanoidRootPart, Humanoid, RenderStepped, Heartbeat, Stepped, Executor, Blacklist_Executor = game.PlaceId, tostring(game.JobId), workspace.CurrentCamera, tick(), META.Players, META.RunService, META.Players.LocalPlayer, META.Players.LocalPlayer.Backpack, META.Players.LocalPlayer.PlayerGui, META.Players.LocalPlayer.PlayerScripts, META.Players.LocalPlayer.Name, META.Players.LocalPlayer.DisplayName, META.Players.LocalPlayer.UserId, tostring(META.Players.LocalPlayer.Team), "Fetching'Script/Config/" .. META.Players.LocalPlayer.UserId .. "/" .. game.PlaceId .. ".json", META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait(), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("HumanoidRootPart"), (META.Players.LocalPlayer.Character or META.Players.LocalPlayer.CharacterAdded:Wait()):WaitForChild("Humanoid"), META.RunService.RenderStepped, META.RunService.Heartbeat, META.RunService.Stepped, string.upper(identifyexecutor()), table.find({"SOLARA", "XENO"}, string.upper(identifyexecutor())) --if Env._ then return end Env._ = true
 local blankfunction = function(...) return ... end
-local clonefunction = clonefunction and clonefunction(clonefunction) and blankfunction
 local request,islclosure,getgc,hookfunction,getrenv,getgenv,identifyexecutor,setclipboard,makefolder,isfolder,writefile,isfile,readfile,delfile,sethiddenproperty,getnilinstances,cloneref,getconnections,getsenv,fireclickdetector,fireproximityprompt,firetouchinterest,getloadedmodules,getinstances,getupvalues,setupvalue,getupvalue,getconstants,getinfo,checkcaller,getcallingscript,getnamecallmethod,hookmetamethod,newcclosure,rconsoleprint,rconsolewarn,rconsoleinfo,rconsoleerr,rconsoleclear,rconsoleinput,rconsoleclose,queueonteleport,getproto,getprotos,setreadonly,isreadonly = syn.request or request, syn.islclosure or islclosure, syn.getgc or getgc, syn.hookfunction or hookfunction, syn.getrenv or getrenv, syn.getgenv or getgenv, syn.identifyexecutor or identifyexecutor, syn.setclipboard or setclipboard, syn.makefolder or makefolder, syn.isfolder or isfolder, syn.writefile or writefile, syn.isfile or isfile, syn.readfile or readfile, syn.delfile or delfile, syn.sethiddenproperty or sethiddenproperty, syn.getnilinstances or getnilinstances, syn.cloneref or cloneref, syn.getconnections or getconnections, syn.getsenv or getsenv, syn.fireclickdetector or fireclickdetector, syn.fireproximityprompt or fireproximityprompt, syn.firetouchinterest or firetouchinterest, syn.getloadedmodules or getloadedmodules, syn.getinstances or getinstances, syn.getupvalues or getupvalues, syn.setupvalue or setupvalue, syn.getupvalue or getupvalue, syn.getconstants or getconstants, syn.getinfo or getinfo, syn.checkcaller or checkcaller, syn.getcallingscript or getcallingscript, syn.getnamecallmethod or getnamecallmethod, syn.hookmetamethod or hookmetamethod, syn.newcclosure or newcclosure, syn.rconsoleprint or rconsoleprint, syn.rconsolewarn or rconsolewarn, syn.rconsoleinfo or rconsoleinfo, syn.rconsoleerr or rconsoleerr, syn.rconsoleclear or rconsoleclear, syn.rconsoleinput or rconsoleinput, syn.rconsoleclose or rconsoleclose, syn.queueonteleport or queueonteleport, syn.getproto or getproto, syn.getprotos or getprotos, syn.setreadonly or setreadonly, syn.isreadonly or isreadonly
-local real_request = clonefunction(request)
-local Main = loadstring(real_request({Url = "https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main",Method = "GET",}).Body)()
+local Main = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
 
 translate = function(en, th)
 	if Configs['Thailand'] then
@@ -153,23 +151,6 @@ do
 		return text
 	end
 
-	Net.lock = function(value: boolean)
-		if not HumanoidRootPart then return end
-		if value then
-			if not HumanoidRootPart:FindFirstChild("Lock") then
-				local BodyVelocity = Instance.new("BodyVelocity")
-				BodyVelocity.Name = "Lock"
-				BodyVelocity.Parent = HumanoidRootPart
-				BodyVelocity.MaxForce = Vector3.new(0, math.huge, 0)
-				BodyVelocity.Velocity = Vector3.new(0, 0, 0)
-			end
-		else
-			if HumanoidRootPart:FindFirstChild("Lock") then
-				HumanoidRootPart:FindFirstChild("Lock"):Destroy()
-			end
-		end
-	end
-
 	Net.tween = function(target: CFrame)
 		if not Character then return end
 		for _, v in pairs(Character:GetDescendants()) do
@@ -220,37 +201,6 @@ do
 		end
 	end
 
-	Net.spin = function(v: Vector3)
-		if not HumanoidRootPart then return end
-		HumanoidRootPart.Rotation = v;
-	end
-
-	Net.closet_mobs = function(v: Folder | any?)
-		local closest, dist = nil, math.huge
-		for _, mob in ipairs(v:GetChildren()) do
-			if mob:IsA("Model") and Net.alive(mob) then
-				local d = Net.distance(mob)
-				if d < dist then
-					dist, closest = d, mob
-				end
-			end
-		end
-		return closest
-	end
-
-	Net.closet_players = function()
-		local closest, dist = nil, math.huge
-		for _, player in ipairs(Players:GetPlayers()) do
-			if player ~= LocalPlayer and player.Character and Net.alive(player.Character) then
-				local d = Net.distance(player.Character)
-				if d < dist then
-					dist, closest = d, player
-				end
-			end
-		end
-		return closest
-	end
-
 	Net.have = function(v)
 		return Character:FindFirstChild(v) or Backpack:FindFirstChild(v)
 	end
@@ -263,24 +213,6 @@ do
 		if not isfolder(base) then makefolder(base) end
 		if not isfile(path) then Net:save() end
 		return HttpService:JSONDecode(readfile(path))
-	end
-
-	Env.include = function(studio: syn)
-		if type(studio) == 'string' then
-			LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
-				Character = newCharacter;
-				Humanoid = Character:WaitForChild('Humanoid');
-				HumanoidRootPart = Character:WaitForChild('HumanoidRootPart');
-				Backpack = LocalPlayer:WaitForChild("Backpack");
-			end)
-			LocalPlayer.Idled:Connect(function()
-				VirtualUser:CaptureController();
-				VirtualUser:ClickButton2(Vector2.new());
-			end)
-			print("Start: " .. studio)
-		else
-			while true do end
-		end
 	end
 
 	Net.round = function(n: number)
@@ -444,7 +376,6 @@ do
 end
 
 task.spawn(function()
-
 	local Home = Window:Add({Title = translate("Home", "หน้าหลัก"),Desc = translate("Options", "ฟังชั่นที่หลากหลาย"),Icon = 81707063924327}) do
 		local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
 			Net.Toggle(Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
@@ -456,51 +387,34 @@ task.spawn(function()
 			end)
 			Net.Toggle(Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
 			Net.Button(Performance,translate("Boost FPS", "แก้แลค"), function()
-				Window:Dialog({
-					Title = translate("Warning", "คำเตือน"),
-					Content = translate("Boost FPS.", "แก้แลค ถ้ากดตกลงเกมจะค้างแปบนึ่ง"),
-					Button = {
-						{
-							Title = translate("Continue", "ตกลง"),
-							Callback = function()
-								pcall(function()
-									local Terrain = workspace:FindFirstChildOfClass('Terrain')
-									Terrain.WaterWaveSize = 0
-									Terrain.WaterWaveSpeed = 0
-									Terrain.WaterReflectance = 0
-									Terrain.WaterTransparency = 0
-									game.Lighting.GlobalShadows = false
-									game.Lighting.FogEnd = 9e9
-									settings().Rendering.QualityLevel = 1
-									for i,v in pairs(game:GetDescendants()) do
-										if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-											v.Material = "Plastic"
-											v.Reflectance = 0
-										elseif v:IsA("Decal") then
-											v.Transparency = 1
-										elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-											v.Lifetime = NumberRange.new(0)
-										elseif v:IsA("Explosion") then
-											v.BlastPressure = 1
-											v.BlastRadius = 1
-										end
-									end
-									for i,v in pairs(Lighting:GetDescendants()) do
-										if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
-											v.Enabled = false
-										end
-									end
-								end)
-							end
-						},
-						{
-							Title = translate("Cancel", "ยกเลิก"),
-							Callback = function()
-								return
-							end
-						}
-					}
-				})
+				pcall(function()
+					local Terrain = workspace:FindFirstChildOfClass('Terrain')
+					Terrain.WaterWaveSize = 0
+					Terrain.WaterWaveSpeed = 0
+					Terrain.WaterReflectance = 0
+					Terrain.WaterTransparency = 0
+					game.Lighting.GlobalShadows = false
+					game.Lighting.FogEnd = 9e9
+					settings().Rendering.QualityLevel = 1
+					for i,v in pairs(game:GetDescendants()) do
+						if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+							v.Material = "Plastic"
+							v.Reflectance = 0
+						elseif v:IsA("Decal") then
+							v.Transparency = 1
+						elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+							v.Lifetime = NumberRange.new(0)
+						elseif v:IsA("Explosion") then
+							v.BlastPressure = 1
+							v.BlastRadius = 1
+						end
+					end
+					for i,v in pairs(Lighting:GetDescendants()) do
+						if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+							v.Enabled = false
+						end
+					end
+				end)
 			end)
 		end
 
@@ -517,53 +431,14 @@ task.spawn(function()
 				setclipboard(JobId)
 			end)
 			Net.Button(Server, translate("Rejoin", "รีเจอย์"), function()
-				Window:Dialog({
-					Title = translate("Warning", "คำเตือน"),
-					Content = translate("Want to Rejoin Server.", "อยากรีเซิฟมั้ย"),
-					Button = {
-						{
-							Title = translate("Continue", "ตกลง"),
-							Callback = function()
-								Net.rejoin()
-							end
-						},
-						{
-							Title = translate("Cancel", "ยกเลิก"),
-							Callback = function()
-								return
-							end
-						}
-					}
-				})
+				Net.rejoin()
 			end)
 			Net.Button(Server, translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
-				Window:Dialog({
-					Title = translate("Warning", "คำเตือน"),
-					Content = translate("Want to Change Server.", "อยากย้ายเซิฟมั้ย"),
-					Button = {
-						{
-							Title = translate("Continue", "ตกลง"),
-							Callback = function()
-								Net.s_hop()
-							end
-						},
-						{
-							Title = translate("Cancel", "ยกเลิก"),
-							Callback = function()
-								return
-							end
-						}
-					}
-				})
+				pcall(Net.s_hop)
 			end)
 		end
 
 		local PlayersSS = Home:Sec({Title = translate("Players", "ผู้เล่น"), Side = "l"}) do
-			local PlayersAll = PlayersSS:Label(translate("All Players : ", "ผู้เล่นทั้งหมด : "))
-			Net.again(function()
-				PlayersAll:Set(translate("All Players : ", "ผู้เล่นทั้งหมด : ") .. Net.html(tostring(#Players:GetPlayers() .. " / " .. Players.MaxPlayers), Color3.fromRGB(134, 211, 255)))
-			end)
-
 			local AllPlayer = {}
 
 			for _, v in pairs(Players:GetPlayers()) do
@@ -595,21 +470,6 @@ task.spawn(function()
 					end
 				end)
 			end})
-
-			Funcs['Tween Player'] = function(Value)
-				Net.loop(Value, 0.1, function()
-					pcall(function()
-						local player = Players:FindFirstChild(Configs["Select Player"])
-						if player and player.Character then
-							Net.tween(player.Character:GetPivot())
-						end
-					end)
-				end, function()
-					return not Value
-				end)
-			end
-
-			Net.Toggle(PlayersSS, translate("Tween to Player", "บินไปหาผู้เล่น"), 'Tween Player')
 			Net.Toggle(PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player', function(v)
 				if v then
 					Camera.CameraSubject = Players:FindFirstChild(Configs["Select Player"]).Character
@@ -669,26 +529,9 @@ task.spawn(function()
 
 		local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
 			Net.Toggle(Config, translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), 'Keep Script')
-			Net.Toggle(Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "English [Enable and rejoin] "), 'Thailand')
+			Net.Toggle(Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "English [Disable and rejoin] "), 'Thailand')
 			Net.Button(Config, "Reset Configs", function()
-				Window:Dialog({
-					Title = translate("Warning", "คำเตือน"),
-					Content = translate("if you continue your settings will reset to officails setting.", "ถ้าคุณตกลงการตั้งค่าที่คุณเปิดไว้เช่น เปิดออโต้ย้ายเซิฟหาบอสไว้ ถ้ากดตกลง ออโต้ย้ายเซิฟหาบอสก็จะถูกปิด"),
-					Button = {
-						{
-							Title = translate("Continue", "ตกลง"),
-							Callback = function()
-								delfile(Folder)
-							end
-						},
-						{
-							Title = translate("Cancel", "ยกเลิก"),
-							Callback = function()
-								return
-							end
-						}
-					}
-				})
+				delfile(Folder)
 			end)
 		end
 	end
@@ -796,6 +639,18 @@ do
 			queueonteleport("loadstring(game:HttpGet('https://github.com/96soul/-/blob/main/load.gg?raw=true', true))()")
 		end
 	end)
+	
+	LocalPlayer.CharacterAdded:Connect(function(newCharacter: Instance)
+		Character = newCharacter;
+		Humanoid = Character:WaitForChild('Humanoid');
+		HumanoidRootPart = Character:WaitForChild('HumanoidRootPart');
+		Backpack = LocalPlayer:WaitForChild("Backpack");
+	end)
+
+	LocalPlayer.Idled:Connect(function()
+		VirtualUser:CaptureController();
+		VirtualUser:ClickButton2(Vector2.new());
+	end)
 end
 
-return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage;real_request}
+return {Net;Funcs;Env;Configs;translate;Window;Players;LocalPlayer;ReplicatedStorage}
