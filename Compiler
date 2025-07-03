@@ -360,7 +360,7 @@ local Window = Main.new({
 	Logo = 128185233852701,
 	Title = "Fetching's Official",
 	Desc = "by @96soul",
-	Discord = "https://discord.gg/DXQsunUuRR",
+	Discord = "https://discord.gg/FK5t45nwAk",
 	KeyEnabled = false,
 	Size = CheckSize()
 })
