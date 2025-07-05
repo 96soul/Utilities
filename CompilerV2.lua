@@ -592,8 +592,9 @@ local Thread = Dictionary({
 				end
 
 				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
+					Thread.__configs['def']('Lauguage', 'English [ Default ]')
 					Thread.__library['@toggle']({sec = Config,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"),setting = "Keep Script"})
-					Thread.__library['@list'](Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, 'Lauguage')
+					Thread.__library['@list'](Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, false, 'Lauguage')
 					Thread.__library['@button'](Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
 						Thread.__function['@rejoin']()
 					end)
