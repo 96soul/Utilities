@@ -368,12 +368,16 @@ local Thread = Dictionary({
 				CallBack = (function(value)
 					Configs[SettingName] = value
 					Thread.__configs['save'](SettingName, Configs[SettingName] or value)
-					if CallBackz ~= nil then CallBackz() end
+					if CallBackz ~= nil then CallBackz(value) end
 					if breakfun ~= nil and not value then breakfun() end
 				end)
 			}
 			if FunctionTree[SettingName] then
-				Thread.__functions['@connection'](0.1, function() FunctionTree[SettingName]() end)
+				Thread.__functions['@connection'](0.1, function()
+					if Configs[SettingName] then
+						FunctionTree[SettingName]()
+					end
+				end)
 			end
 			return Tab:Toggle(Options)
 		end)
