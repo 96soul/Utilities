@@ -150,13 +150,10 @@ local Signal = {} do
 	})
 end
 
-local Modules = {} do
-
-	local Thread = Dictionary({
-		"__function", "__configs", "__library", "__game"
-	}, {})
-
-	;(function()
+local Thread = Dictionary({
+	"__function", "__configs", "__library", "__game"
+}, {}) do
+	(function()
 		Thread.__function['@connection'] = (function(interval: number, func: any, protectcall: boolean)
 			return task.spawn(function()
 				while task.wait(interval) do
@@ -405,7 +402,7 @@ local Modules = {} do
 				Thread.__configs['save'](setting, v)
 			end})
 		end)
-		
+
 		Thread.__library['@setup'] = (function(window: table)
 			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
@@ -569,7 +566,7 @@ local Modules = {} do
 					end)
 				end
 			end
-			
+
 			_ENV.NormalLightingSettings = {
 				Brightness = Lighting.Brightness,
 				ClockTime = Lighting.ClockTime,
@@ -664,7 +661,9 @@ local Modules = {} do
 				end
 			end, true)
 		end)
-		
+
+		Thread.__configs['def']('X', 0)
+		Thread.__configs['def']('Y', 0)
 		Thread.__library['@init'] = (function()
 			if Configs['X'] == 0 and Configs['Y'] == 0 then
 				if _MT['UserInputService'].KeyboardEnabled then
@@ -676,19 +675,6 @@ local Modules = {} do
 				return UDim2.new(0, Configs['X'], 0, Configs['Y'])
 			end
 		end)
-		
-		Thread.__configs['def']('X', 0)
-		Thread.__configs['def']('Y', 0)
-		
-		repeat wait() until game:GetService("CoreGui").lnwza.Background
-
-		do
-			game:GetService("CoreGui").lnwza.Background:GetPropertyChangedSignal("Size"):Connect(function()
-				local size = game:GetService("CoreGui").lnwza.Background.Size
-				Thread.__configs['save']('X', size.X.Offset)
-				Thread.__configs['save']('X', size.X.Offset)
-			end)
-		end
 	end)()
 
 	Thread.__game['@mains'] = (function()
@@ -902,12 +888,10 @@ local Modules = {} do
 			return Module
 		end
 	end)
-	
-	
 end
 
 do
-	
+
 	LocalPlayer.CharacterAdded:Connect(function(_Character: Instance)
 		Character = _Character
 		Humanoid = _Character:WaitForChild('Humanoid')
@@ -936,7 +920,8 @@ return table.unpack({
 	_MT,
 	Configs,
 	Dictionary,
-	Modules,
+	translate,
+	Thread,
 	LocalPlayer,
 	HumanoidRootPart,
 })
