@@ -592,12 +592,12 @@ local Thread = Dictionary({
 				end
 
 				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
-					Thread.__library['@toggle']({sec = Configs,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"),setting = "Keep Script"})
+					Thread.__library['@toggle']({sec = Config,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"),setting = "Keep Script"})
 					Thread.__library['@list'](Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, 'Lauguage')
 					Thread.__library['@button'](Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
 						Thread.__function['@rejoin']()
 					end)
-					Thread.__library['@button'](Config, translate("Remove Workspace", "ลบการตั้งค่า"), function()
+					Thread.__library['@button'](Config, translate("Reset Configs", "ลบการตั้งค่า"), function()
 						delfile(Folder)
 					end)
 				end
@@ -943,7 +943,7 @@ do
 
 	local TeleportCheck = false
 	LocalPlayer.OnTeleport:Connect(function(State)
-		if Configs['Keep Script'] and (not TeleportCheck) and _ENV.queueonteleport then
+		if Configs['Keep Script'] and (not TeleportCheck) and queueonteleport then
 			TeleportCheck = true
 			queueonteleport("loadstring(game:HttpGet('https://github.com/96soul/-/blob/main/load.gg?raw=true', true))()")
 		end
@@ -960,4 +960,5 @@ return table.unpack({
 	Thread,
 	LocalPlayer,
 	HumanoidRootPart,
+	Humanoid,
 })
