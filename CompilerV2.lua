@@ -370,7 +370,7 @@ local Thread = Dictionary({
 			local Function: func = meta.self or ""
 			local Callback: func = meta.call or ""
 			local IsProtect: boolean = meta.pcall or false
-			
+
 			if Icon == "" then
 				if Function ~= "" then
 					Thread.__function['@connection'](Delay, function()
@@ -379,7 +379,7 @@ local Thread = Dictionary({
 						end
 					end, IsProtect)
 				end
-		
+
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
@@ -395,7 +395,7 @@ local Thread = Dictionary({
 						end
 					end)
 				}
-				
+
 				return Section:Toggle(Options)
 			else
 				if Function ~= "" then
@@ -405,7 +405,7 @@ local Thread = Dictionary({
 						end
 					end, IsProtect)
 				end
-				
+
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
@@ -422,10 +422,10 @@ local Thread = Dictionary({
 						end
 					end)
 				}
-				
+
 				return Section:ToggleImage(Options)
 			end
-			
+
 		end)
 
 		Thread.__library['@list'] = (function(sec: table, title: string, list: table, m: boolean, setting: string)
@@ -530,7 +530,7 @@ local Thread = Dictionary({
 							end
 						end)
 					end)
-					
+
 					Thread.__library['@toggle']({sec = PlayersSS,title = translate("View Player", "ดูผู้เล่น"),setting = "View Player",call = function(v)
 						if v then
 							local player = Players:FindFirstChild(Configs["Select Player"])
@@ -714,215 +714,213 @@ local Thread = Dictionary({
 	end)()
 
 	Thread.__game['@mains'] = (function()
+
+		local Module: Data = {}
+
 		if PlaceId == 2753915549 or PlaceId == 4442272183 or PlaceId == 7449423635 then
-			Thread.__game['@mains']['@bloxfruits'] = {} do
-
-			end
-
-			return Thread.__game['@mains']['@bloxfruits']
+			
 		elseif PlaceId == 126884695634066 then
-			local Module = Thread.__game['@mains']['@grow_a_garden']
+			local Module = Thread.__game['@mains']
 
 			local farm = nil
 			local Plant_Locations = nil
 			local Plants_Physical = nil
 
-			Module = {} do
-				Module.Net = {
-					['Sell'] = ReplicatedStorage.GameEvents.Sell_Inventory,
-					['Plant'] = ReplicatedStorage.GameEvents.Plant_RE,
-					['Collect'] = ReplicatedStorage.ByteNetReliable,
-					['Buy Seed'] = ReplicatedStorage.GameEvents.BuySeedStock,
-					['Buy Gear'] = ReplicatedStorage.GameEvents.BuyGearStock,
-					['Water'] = ReplicatedStorage.GameEvents.Water_RE
-				}
+			Module.Net = {
+				['Sell'] = ReplicatedStorage.GameEvents.Sell_Inventory,
+				['Plant'] = ReplicatedStorage.GameEvents.Plant_RE,
+				['Collect'] = ReplicatedStorage.ByteNetReliable,
+				['Buy Seed'] = ReplicatedStorage.GameEvents.BuySeedStock,
+				['Buy Gear'] = ReplicatedStorage.GameEvents.BuyGearStock,
+				['Water'] = ReplicatedStorage.GameEvents.Water_RE
+			}
 
-				Module.GetFarm = require(ReplicatedStorage.Modules.GetFarm)
-				farm = Module.GetFarm(LocalPlayer)
-				Plant_Locations = farm.Important.Plant_Locations
-				Plants_Physical = farm.Important.Plants_Physical
+			Module.GetFarm = require(ReplicatedStorage.Modules.GetFarm)
+			farm = Module.GetFarm(LocalPlayer)
+			Plant_Locations = farm.Important.Plant_Locations
+			Plants_Physical = farm.Important.Plants_Physical
 
-				Module.Fruit = function(Class: table)
-					local fruits = {}
-					for _, v in ipairs(Plants_Physical:GetChildren()) do
-						if v:IsA("Model") then
-							local include = false
-							if Class == nil then
-								include = true
-							elseif type(Class) == "string" then
-								include = v.Name == Class
-							elseif type(Class) == "table" then
-								include = table.find(Class, v.Name) ~= nil
-							end
-							if include then
-								table.insert(fruits, v)
-								local fruitContainer = v:FindFirstChild("Fruits")
-								if fruitContainer then
-									for _, fruit in ipairs(fruitContainer:GetChildren()) do
-										table.insert(fruits, fruit)
-									end
-								end
-							end
+			Module.Fruit = function(Class: table)
+				local fruits = {}
+				for _, v in ipairs(Plants_Physical:GetChildren()) do
+					if v:IsA("Model") then
+						local include = false
+						if Class == nil then
+							include = true
+						elseif type(Class) == "string" then
+							include = v.Name == Class
+						elseif type(Class) == "table" then
+							include = table.find(Class, v.Name) ~= nil
 						end
-					end
-					return fruits
-				end
-
-				Module.FruitSpecial = function(e: table)
-					local fruits = {}
-					for _, v in ipairs(Plants_Physical:GetChildren()) do
-						if v:IsA("Model") then
-							local attr = v:GetAttributes()
-							local match = false
+						if include then
+							table.insert(fruits, v)
 							local fruitContainer = v:FindFirstChild("Fruits")
-							if type(e) == "table" then
-								for _, key in ipairs(e) do
-									if attr[key] then
-										match = true
-									end
-								end
-							else
-								match = v:GetAttribute(e) and true or false
-							end
-							if match then
-								table.insert(fruits, v)
-							end
 							if fruitContainer then
 								for _, fruit in ipairs(fruitContainer:GetChildren()) do
-									local fruitAttr = fruit:GetAttributes()
-									local match2 = false
-									if type(e) == "table" then
-										for _, key in ipairs(e) do
-											if fruitAttr[key] then
-												match2 = true
-											end
-										end
-									else
-										match2 = fruit:GetAttribute(e) and true or false
-									end
-									if match2 then
-										table.insert(fruits, fruit)
-									end
+									table.insert(fruits, fruit)
 								end
 							end
 						end
 					end
-					return fruits
 				end
-
-				Module.HaveSeed = function()
-					for _, v in pairs(Character:GetChildren()) do
-						if v:IsA("Tool") and v:GetAttribute("Seed") then
-							return v
-						end
-					end
-					return nil
-				end
-
-				Module.CheckSeed = function()
-					local tool = Character:FindFirstChildOfClass("Tool")
-					if tool and tool:GetAttribute("Seed") then
-						return true
-					end
-					return false
-				end
-
-				Module.Max = function()
-					return PlayerGui.BackpackGui.Backpack.Inventory.ScrollingFrame.UIGridFrame:FindFirstChild("200") or LocalPlayer.PlayerGui.BackpackGui.Backpack.Inventory:FindFirstChild("200")
-				end
-
-				Module.GetDataModule = function(a: ModuleScript)
-					local shopData = require(a)
-					local a = {}
-					for itemName in pairs(shopData) do
-						table.insert(a, itemName)
-					end
-					return a
-				end
-
-				Module.GetOtherFarm = function()
-					local otherFarm = {}
-					for _, v7 in pairs(workspace.Farm:GetChildren()) do
-						if tostring(v7.Important.Data.Owner.Value) ~= LocalPlayer.Name then
-							table.insert(otherFarm, v7)
-						end
-					end
-					return otherFarm
-				end
-
-				Module.GetValueHighPlant = function()
-					local otherFarms = Module.GetOtherFarm()
-					local fruits = {}
-					for _, farm in pairs(otherFarms) do
-						for _, plant in pairs(farm.Important.Plants_Physical:GetChildren()) do
-							if plant:IsA("Model") then
-								local fruitContainer = plant:FindFirstChild("Fruits")
-								if fruitContainer then
-									for _, fruit in ipairs(fruitContainer:GetChildren()) do
-										table.insert(fruits, fruit)
-									end
-								end
-							end
-						end
-					end
-
-					return fruits
-				end
-
-				local Calculate = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("CalculatePlantValue"))
-
-				Module.GetHighestFruit = function()
-					local allFruits = Module.GetValueHighPlant()
-					local highestFruit = nil
-					local highestValue = - math.huge
-					for _, fruit in pairs(allFruits) do
-						local value = Calculate(fruit)
-						if type(value) == "number" and value > highestValue then
-							highestValue = value
-							highestFruit = fruit
-						end
-					end
-
-					return highestFruit
-				end
-
-				Module.GetHighestFruitValue = function()
-					local fruit = Module.GetHighestFruit()
-					if fruit then
-						return math.floor(Calculate(fruit))
-					end
-					return 0
-				end
-
-				Module.CheckFarmEX = function()
-					local expansionModel = farm:WaitForChild("CurrentExpansion")
-					local size = expansionModel:GetExtentsSize() / 2
-					local center = expansionModel:GetPivot().Position
-					if math.abs(HumanoidRootPart.Position.X - center.X) <= size.X and math.abs(HumanoidRootPart.Position.Y - center.Y) <= size.Y and math.abs(HumanoidRootPart.Position.Z - center.Z) <= size.Z then
-						return true
-					end
-					return false
-				end
-
-				local MutationList = {}
-				local Mutation = require(ReplicatedStorage.Modules.MutationHandler)
-				local FruitsList = Module.GetDataModule(ReplicatedStorage.Data.SeedData)
-				local EventShopData = Module.GetDataModule(ReplicatedStorage.Data.EventShopData)
-				local GearData = Module.GetDataModule(ReplicatedStorage.Data.GearData)
-				for iz in pairs(Mutation:GetMutations()) do
-					table.insert(MutationList, iz)
-				end
-
-				Module.Data = {
-					['Gear'] = GearData,
-					['Event Shop'] = EventShopData,
-					['Seed'] = FruitsList,
-					['Mutation'] = MutationList
-				}
+				return fruits
 			end
 
-			return Module
+			Module.FruitSpecial = function(e: table)
+				local fruits = {}
+				for _, v in ipairs(Plants_Physical:GetChildren()) do
+					if v:IsA("Model") then
+						local attr = v:GetAttributes()
+						local match = false
+						local fruitContainer = v:FindFirstChild("Fruits")
+						if type(e) == "table" then
+							for _, key in ipairs(e) do
+								if attr[key] then
+									match = true
+								end
+							end
+						else
+							match = v:GetAttribute(e) and true or false
+						end
+						if match then
+							table.insert(fruits, v)
+						end
+						if fruitContainer then
+							for _, fruit in ipairs(fruitContainer:GetChildren()) do
+								local fruitAttr = fruit:GetAttributes()
+								local match2 = false
+								if type(e) == "table" then
+									for _, key in ipairs(e) do
+										if fruitAttr[key] then
+											match2 = true
+										end
+									end
+								else
+									match2 = fruit:GetAttribute(e) and true or false
+								end
+								if match2 then
+									table.insert(fruits, fruit)
+								end
+							end
+						end
+					end
+				end
+				return fruits
+			end
+
+			Module.HaveSeed = function()
+				for _, v in pairs(Character:GetChildren()) do
+					if v:IsA("Tool") and v:GetAttribute("Seed") then
+						return v
+					end
+				end
+				return nil
+			end
+
+			Module.CheckSeed = function()
+				local tool = Character:FindFirstChildOfClass("Tool")
+				if tool and tool:GetAttribute("Seed") then
+					return true
+				end
+				return false
+			end
+
+			Module.Max = function()
+				return PlayerGui.BackpackGui.Backpack.Inventory.ScrollingFrame.UIGridFrame:FindFirstChild("200") or LocalPlayer.PlayerGui.BackpackGui.Backpack.Inventory:FindFirstChild("200")
+			end
+
+			Module.GetDataModule = function(a: ModuleScript)
+				local shopData = require(a)
+				local a = {}
+				for itemName in pairs(shopData) do
+					table.insert(a, itemName)
+				end
+				return a
+			end
+
+			Module.GetOtherFarm = function()
+				local otherFarm = {}
+				for _, v7 in pairs(workspace.Farm:GetChildren()) do
+					if tostring(v7.Important.Data.Owner.Value) ~= LocalPlayer.Name then
+						table.insert(otherFarm, v7)
+					end
+				end
+				return otherFarm
+			end
+
+			Module.GetValueHighPlant = function()
+				local otherFarms = Module.GetOtherFarm()
+				local fruits = {}
+				for _, farm in pairs(otherFarms) do
+					for _, plant in pairs(farm.Important.Plants_Physical:GetChildren()) do
+						if plant:IsA("Model") then
+							local fruitContainer = plant:FindFirstChild("Fruits")
+							if fruitContainer then
+								for _, fruit in ipairs(fruitContainer:GetChildren()) do
+									table.insert(fruits, fruit)
+								end
+							end
+						end
+					end
+				end
+
+				return fruits
+			end
+
+			local Calculate = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("CalculatePlantValue"))
+
+			Module.GetHighestFruit = function()
+				local allFruits = Module.GetValueHighPlant()
+				local highestFruit = nil
+				local highestValue = - math.huge
+				for _, fruit in pairs(allFruits) do
+					local value = Calculate(fruit)
+					if type(value) == "number" and value > highestValue then
+						highestValue = value
+						highestFruit = fruit
+					end
+				end
+
+				return highestFruit
+			end
+
+			Module.GetHighestFruitValue = function()
+				local fruit = Module.GetHighestFruit()
+				if fruit then
+					return math.floor(Calculate(fruit))
+				end
+				return 0
+			end
+
+			Module.CheckFarmEX = function()
+				local expansionModel = farm:WaitForChild("CurrentExpansion")
+				local size = expansionModel:GetExtentsSize() / 2
+				local center = expansionModel:GetPivot().Position
+				if math.abs(HumanoidRootPart.Position.X - center.X) <= size.X and math.abs(HumanoidRootPart.Position.Y - center.Y) <= size.Y and math.abs(HumanoidRootPart.Position.Z - center.Z) <= size.Z then
+					return true
+				end
+				return false
+			end
+
+			local MutationList = {}
+			local Mutation = require(ReplicatedStorage.Modules.MutationHandler)
+			local FruitsList = Module.GetDataModule(ReplicatedStorage.Data.SeedData)
+			local EventShopData = Module.GetDataModule(ReplicatedStorage.Data.EventShopData)
+			local GearData = Module.GetDataModule(ReplicatedStorage.Data.GearData)
+			for iz in pairs(Mutation:GetMutations()) do
+				table.insert(MutationList, iz)
+			end
+
+			Module.Data = {
+				['Gear'] = GearData,
+				['Event Shop'] = EventShopData,
+				['Seed'] = FruitsList,
+				['Mutation'] = MutationList
+			}
+
 		end
+
+		return Module
 	end)
 end
 
