@@ -406,7 +406,7 @@ local Thread = Dictionary({
 		Thread.__library['@setup'] = (function(window: table)
 			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
-					Thread.__library['@toggle'](Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
+					Thread.__library['@toggle'](Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen" ,nil, function(v)
 						if v then
 							RunService:Set3dRenderingEnabled(false)
 						else
@@ -498,7 +498,7 @@ local Thread = Dictionary({
 							end
 						end)
 					end})
-					Thread.__library['@toggle'](PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player', function(v)
+					Thread.__library['@toggle'](PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player',nil, function(v)
 						if v then
 							local player = Players:FindFirstChild(Configs["Select Player"])
 							if player and player.Character then
@@ -560,7 +560,10 @@ local Thread = Dictionary({
 
 				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
 					Thread.__library['@toggle'](Config, translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), 'Keep Script')
-					Thread.__library['@toggle'](Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "English [Disable and rejoin] "), 'Thailand')
+					Thread.__library['@list'](Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, 'Lauguage')
+					Thread.__library['@button'](Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
+						Thread.__function['@rejoin']()
+					end)
 					Thread.__library['@button'](Config, translate("Remove Workspace", "ลบการตั้งค่า"), function()
 						delfile(Folder)
 					end)
