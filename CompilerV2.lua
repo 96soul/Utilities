@@ -31,7 +31,6 @@ local PlaceId = game['PlaceId']
 local JobId = game['JobId']
 
 local Configs = {}
-local FunctionTree = {}
 local Folder: string = "Fetching'Script/Config/" .. LocalPlayer.UserId .. "/" .. PlaceId .. ".json"
 
 function Dictionary(array: { string }, value: any?): { [string]: any? }
@@ -384,7 +383,7 @@ local Thread = Dictionary({
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
-					CallBack = (function(value)
+					Callback = (function(value)
 						Configs[Setting] = value
 						Thread.__configs['save'](Setting, value)
 						if Callback ~= "" then 
@@ -411,7 +410,7 @@ local Thread = Dictionary({
 					Title = Title,
 					Value = Configs[Setting],
 					Icon = Icon,
-					CallBack = (function(value)
+					Callback = (function(value)
 						Configs[Setting] = value
 						Thread.__configs['save'](Setting, value)
 						if Callback ~= "" then 
@@ -957,7 +956,6 @@ return table.unpack({
 	Configs,
 	Dictionary,
 	translate,
-	FunctionTree,
 	Thread,
 	LocalPlayer,
 	HumanoidRootPart,
