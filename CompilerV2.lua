@@ -720,7 +720,6 @@ local Thread = Dictionary({
 		if PlaceId == 2753915549 or PlaceId == 4442272183 or PlaceId == 7449423635 then
 			
 		elseif PlaceId == 126884695634066 then
-			local Module = Thread.__game['@mains']
 
 			local farm = nil
 			local Plant_Locations = nil
