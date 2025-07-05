@@ -8,6 +8,7 @@ end
 
 local _ENV = (getgenv or getrenv or getfenv)()
 local _MT = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
 
 local VirtualInputManager: VirtualInputManager = _MT["VirtualInputManager"]
 local CollectionService: CollectionService = _MT["CollectionService"]
@@ -930,9 +931,12 @@ do
 end
 
 return table.unpack({
+	Library,
 	_ENV,
 	_MT,
 	Configs,
 	Dictionary,
 	Modules,
+	LocalPlayer,
+	HumanoidRootPart,
 })
