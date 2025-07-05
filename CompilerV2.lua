@@ -358,50 +358,75 @@ local Thread = Dictionary({
 				Icon = Icon,
 				Callback = call
 			}
-			return sec:Button(Options) 
+			return sec:ButtomImage(Options) 
 		end)
 
-		Thread.__library['@toggle'] = (function(Tab: table, Title: string, SettingName: string, breakfun: func, CallBackz: func)
-			local Options = {
-				Title = Title,
-				Value = Configs[SettingName],
-				CallBack = (function(value)
-					Configs[SettingName] = value
-					Thread.__configs['save'](SettingName, value)
-					if CallBackz ~= nil then CallBackz(value) end
-					if breakfun ~= nil and not value then breakfun() end
-				end)
-			}
-			if FunctionTree[SettingName] then
-				Thread.__functions['@connection'](0.1, function()
-					if Configs[SettingName] then
-						FunctionTree[SettingName]()
-					end
-				end)
+		Thread.__library['@toggle'] = (function(meta: table)
+			local Section = meta.sec or false
+			if not Section then return "No Section" end
+			local Delay: number = meta.delay or 0.1
+			local Title: string = meta.title or "Toggle"
+			local Icon: number = meta.icon or ""
+			local Setting: string = meta.setting or ""
+			local Function: func = meta.self or ""
+			local Callback: func = meta.call or ""
+			local IsProtect: boolean = meta.pcall or false
+			
+			if Icon == "" then
+				if Function ~= "" then
+					Thread.__function['@connection'](Delay, function()
+						if Configs[Setting] then
+							Function()
+						end
+					end, IsProtect)
+				end
+		
+				local Options: table = {
+					Title = Title,
+					Value = Configs[Setting],
+					CallBack = (function(value)
+						Configs[Setting] = value
+						Thread.__configs['save'](Setting, value)
+						if Callback ~= "" then 
+							if IsProtect then
+								pcall(Callback, value)
+							else
+								Callback(value)
+							end
+						end
+					end)
+				}
+				
+				return Section:Toggle(Options)
+			else
+				if Function ~= "" then
+					Thread.__function['@connection'](Delay, function()
+						if Configs[Setting] then
+							Function()
+						end
+					end, IsProtect)
+				end
+				
+				local Options: table = {
+					Title = Title,
+					Value = Configs[Setting],
+					Icon = Icon,
+					CallBack = (function(value)
+						Configs[Setting] = value
+						Thread.__configs['save'](Setting, value)
+						if Callback ~= "" then 
+							if IsProtect then
+								pcall(Callback, value)
+							else
+								Callback(value)
+							end
+						end
+					end)
+				}
+				
+				return Section:ToggleImage(Options)
 			end
-			return Tab:Toggle(Options)
-		end)
-
-		Thread.__library['@toggle_image'] = (function(Tab: table, Title: string, Icon, SettingName: string, breakfun: func, CallBackz: func)
-			local Options = {
-				Title = Title,
-				Value = Configs[SettingName],
-				Icon = Icon,
-				CallBack = (function(value)
-					Configs[SettingName] = value
-					Thread.__configs['save'](SettingName, value)
-					if CallBackz ~= nil then CallBackz(value) end
-					if breakfun ~= nil and not value then breakfun() end
-				end)
-			}
-			if FunctionTree[SettingName] then
-				Thread.__functions['@connection'](0.1, function()
-					if Configs[SettingName] then
-						FunctionTree[SettingName]()
-					end
-				end)
-			end
-			return Tab:Toggle(Options)
+			
 		end)
 
 		Thread.__library['@list'] = (function(sec: table, title: string, list: table, m: boolean, setting: string)
@@ -414,29 +439,14 @@ local Thread = Dictionary({
 		Thread.__library['@setup'] = (function(window: table)
 			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
-					Thread.__library['@toggle'](
-						Performance,               -- Tab UI ที่ต้องการเพิ่ม Toggle เข้าไป
-						"Auto Farm",       -- ชื่อหัวข้อใน UI
-						"AutoFarmEnabled", -- ชื่อตัวแปร config ที่ใช้เก็บสถานะ
-						nil,
-						function(state)    -- CallBackz (จะถูกเรียกทุกครั้งที่ toggle เปลี่ยนค่า)
-							print("Auto Farm:", state and "ON" or "OFF")
+					Thread.__library['@toggle']({sec = Performance,title = translate("Enable White Screen", "เปิดใช้งานจอขาว"),setting = "White Screen",call = function(v)
+						if v then
+							RunService:Set3dRenderingEnabled(false)
+						else
+							RunService:Set3dRenderingEnabled(true)
 						end
-					)
-					Thread.__library['@toggle'](
-						Performance,
-						translate("Enable White Screen", "เปิดใช้งานจอขาว"),
-						"White Screen",
-						nil,
-						function(v)
-							if v then
-								RunService:Set3dRenderingEnabled(false)
-							else
-								RunService:Set3dRenderingEnabled(true)
-							end
-						end
-					)
-					Thread.__library['@toggle'](Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
+					end})
+					Thread.__library['@toggle']({sec = Performance,title = translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"),setting = "Fullbright"})
 					Thread.__library['@button'](Performance,translate("Boost FPS", "แก้แลค"), function()
 						pcall(function()
 							local Terrain = workspace:FindFirstChildOfClass('Terrain')
@@ -582,7 +592,7 @@ local Thread = Dictionary({
 				end
 
 				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
-					Thread.__library['@toggle'](Config, translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), 'Keep Script')
+					Thread.__library['@toggle']({sec = Configs,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"),setting = "Keep Script"})
 					Thread.__library['@list'](Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, 'Lauguage')
 					Thread.__library['@button'](Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
 						Thread.__function['@rejoin']()
@@ -947,6 +957,7 @@ return table.unpack({
 	Configs,
 	Dictionary,
 	translate,
+	FunctionTree,
 	Thread,
 	LocalPlayer,
 	HumanoidRootPart,
