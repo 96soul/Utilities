@@ -12,6 +12,7 @@ local _MT = setmetatable({}, {__index = function(_, key) return cloneref(game:Ge
 local VirtualInputManager: VirtualInputManager = _MT["VirtualInputManager"]
 local CollectionService: CollectionService = _MT["CollectionService"]
 local ReplicatedStorage: ReplicatedStorage = _MT["ReplicatedStorage"]
+local Lighting: Lighting = _MT['Lighting']
 local HttpService: HttpService = _MT['HttpService']
 local TeleportService: TeleportService = _MT["TeleportService"]
 local VirtualUser: VirtualUser = _MT['VirtualUser']
@@ -25,11 +26,12 @@ local Character = LocalPlayer['Character']
 local Humanoid = Character:WaitForChild('Humanoid')
 local HumanoidRootPart = Character:WaitForChild('HumanoidRootPart')
 
-local Configs = {}
-local FunctionTree = {}
-
 local PlaceId = game['PlaceId']
 local JobId = game['JobId']
+
+local Configs = {}
+local FunctionTree = {}
+local Folder: string = "Fetching'Script/Config/" .. LocalPlayer.UserId .. "/" .. PlaceId .. ".json"
 
 function Dictionary(array: { string }, value: any?): { [string]: any? }
 	local Dictionary = {}
@@ -293,9 +295,6 @@ local Modules = {} do
 	end)()
 
 	;(function()
-
-		local Folder: string = "Fetching'Script/Config/" .. LocalPlayer.UserId .. "/" .. PlaceId .. ".json"
-
 		Thread.__configs['def'] = (function(v: string, a: boolean | string | number | table | any)
 			if type(v) == "table" then
 				for i, k in pairs(v) do
@@ -405,6 +404,290 @@ local Modules = {} do
 				Thread.__configs['save'](setting, v)
 			end})
 		end)
+		
+		Thread.__library['@setup'] = (function(window: table)
+			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
+				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
+					Thread.__library['@toggle'](Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen", function(v)
+						if v then
+							RunService:Set3dRenderingEnabled(false)
+						else
+							RunService:Set3dRenderingEnabled(true)
+						end
+					end)
+					Thread.__library['@toggle'](Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
+					Thread.__library['@button'](Performance,translate("Boost FPS", "แก้แลค"), function()
+						pcall(function()
+							local Terrain = workspace:FindFirstChildOfClass('Terrain')
+							Terrain.WaterWaveSize = 0
+							Terrain.WaterWaveSpeed = 0
+							Terrain.WaterReflectance = 0
+							Terrain.WaterTransparency = 0
+							game.Lighting.GlobalShadows = false
+							game.Lighting.FogEnd = 9e9
+							settings().Rendering.QualityLevel = 1
+							for i,v in pairs(game:GetDescendants()) do
+								if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+									v.Material = "Plastic"
+									v.Reflectance = 0
+								elseif v:IsA("Decal") then
+									v.Transparency = 1
+								elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+									v.Lifetime = NumberRange.new(0)
+								elseif v:IsA("Explosion") then
+									v.BlastPressure = 1
+									v.BlastRadius = 1
+								end
+							end
+							for i,v in pairs(_MT['Lighting']:GetDescendants()) do
+								if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
+									v.Enabled = false
+								end
+							end
+						end)
+					end)
+				end
+
+				local Server = Home:Sec({Title = translate("Server", "เซิร์ฟเวอร์"), Side = "r"}) do
+					Thread.__configs['def']('Input JobID', JobId)
+					Server:Textbox({Value = Configs["Input JobID"], function(v)
+						Configs["Input JobID"] = v
+						Thread.__configs['save']("Input JobID", v)
+					end})
+					Thread.__library['@button'](Server, translate("Join", "เข้าร่วม"), function()
+						TeleportService:TeleportToPlaceInstance(PlaceId, Configs['Input JobID'], LocalPlayer)
+					end)
+					Thread.__library['@button'](Server, translate("Clipboard JobId", "คัดลอกไอดีเซิร์ฟเวอร์"), function()
+						setclipboard(JobId)
+					end)
+					Thread.__library['@button'](Server, translate("Rejoin", "รีเจอย์"), function()
+						Thread.__function['@rejoin']()
+					end)
+					Thread.__library['@button'](Server, translate("Change Server", "เปลี่ยนเซิร์ฟเวอร์"), function()
+						pcall(Thread.__function['@serverhop'])
+					end)
+				end
+
+				local PlayersSS = Home:Sec({Title = translate("Players", "ผู้เล่น"), Side = "l"}) do
+					local AllPlayer = {}
+
+					for _, v in pairs(Players:GetPlayers()) do
+						if v ~= LocalPlayer and v.Character then
+							table.insert(AllPlayer, v.Name)
+						end
+					end
+
+					Thread.__configs['def']('Select Player', AllPlayer[1])
+					local PlayerDropdown = PlayersSS:Dropdown({Title = translate("Select Player", "เลือกผู้เล่น"),Multi = false,List = AllPlayer,Value = Configs['Select Player'],Callback = function(v)
+						Configs['Select Player'] = v
+						Thread.__configs['save']('Select Player', v)
+					end})
+
+					Thread.__library['@button']({Title = translate("Refresh", "รีเฟรช"), Callback = function()
+						PlayerDropdown:Clear()
+						for _, v in pairs(Players:GetPlayers()) do
+							if v ~= LocalPlayer and v.Character then
+								PlayerDropdown:AddList(v.Name)
+							end
+						end
+					end})
+
+					Thread.__library['@button']({Title = translate("Teleport", "เทเลพอร์ต"), Callback = function()
+						pcall(function()
+							local player = Players:FindFirstChild(Configs["Select Player"])
+							if player and player.Character then
+								Thread.__function['@tp'](player.Character)
+							end
+						end)
+					end})
+					Thread.__library['@toggle'](PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player', function(v)
+						if v then
+							local player = Players:FindFirstChild(Configs["Select Player"])
+							if player and player.Character then
+								workspace.CurrentCamera.CameraSubject = player.Character
+							end
+						else
+							workspace.CurrentCamera.CameraSubject = Humanoid
+						end
+					end)
+				end
+
+				local Power = Home:Sec({Title = translate("Powers", "ความสามารถพิเศษ"), Side = "r"}) do
+					local OldSpeed = Humanoid.WalkSpeed
+					Thread.__configs['def']('Walkspeed', Humanoid.WalkSpeed)
+
+					local CFloop
+					Power:Toggle({Title = translate("CFLY", "ถอดวิญญาณ"), Value = false, Callback = function(v)
+						if v then
+							Humanoid.PlatformStand = true
+							local Head = Character:WaitForChild("Head")
+							Head.Anchored = true
+							if CFloop then CFloop:Disconnect() end
+							CFloop = RunService.Heartbeat:Connect(function(deltaTime)
+								local moveDirection = Character:FindFirstChildOfClass('Humanoid').MoveDirection * (100 * deltaTime)
+								local headCFrame = Head.CFrame
+								local cameraCFrame = workspace.CurrentCamera.CFrame
+								local cameraOffset = headCFrame:ToObjectSpace(cameraCFrame).Position
+								cameraCFrame = cameraCFrame * CFrame.new(-cameraOffset.X, -cameraOffset.Y, -cameraOffset.Z + 1)
+								local cameraPosition = cameraCFrame.Position
+								local headPosition = headCFrame.Position
+
+								local objectSpaceVelocity = CFrame.new(cameraPosition, Vector3.new(headPosition.X, cameraPosition.Y, headPosition.Z)):VectorToObjectSpace(moveDirection)
+								Head.CFrame = CFrame.new(headPosition) * (cameraCFrame - cameraPosition) * CFrame.new(objectSpaceVelocity)
+							end)
+						else
+							if CFloop then
+								CFloop:Disconnect()
+								Humanoid.PlatformStand = false
+								local Head = Character:WaitForChild("Head")
+								Head.Anchored = false
+							end
+						end
+					end})
+
+					Power:Slider({Title = translate("Speed", "ความเร็ว"),Min = 16,Max = 150,Value = Configs['Walkspeed'], CallBack = function(v)
+						Configs['Walkspeed'] = v
+						Thread.__configs['save']('Walkspeed', v)
+						Humanoid.WalkSpeed = v
+					end})
+
+					Thread.__library['@button'](Power, translate("Change to Old Walkspeed", "คืนค่าความเร็ว"), function()
+						Humanoid.WalkSpeed = OldSpeed
+					end)
+
+					LocalPlayer.CharacterAdded:Connect(function(char)
+						char:WaitForChild("Humanoid").WalkSpeed = Configs['Walkspeed']
+					end)
+				end
+
+				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
+					Thread.__library['@toggle'](Config, translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), 'Keep Script')
+					Thread.__library['@toggle'](Config, translate("ภาษาไทย [เปิดแล้วออกเข้าใหม่]", "English [Disable and rejoin] "), 'Thailand')
+					Thread.__library['@button'](Config, translate("Remove Workspace", "ลบการตั้งค่า"), function()
+						delfile(Folder)
+					end)
+				end
+			end
+			
+			_ENV.NormalLightingSettings = {
+				Brightness = Lighting.Brightness,
+				ClockTime = Lighting.ClockTime,
+				FogEnd = Lighting.FogEnd,
+				GlobalShadows = Lighting.GlobalShadows,
+				Ambient = Lighting.Ambient
+			}
+
+			Lighting:GetPropertyChangedSignal("Brightness"):Connect(function()
+				if Lighting.Brightness ~= 1 and Lighting.Brightness ~= _ENV.NormalLightingSettings.Brightness then
+					_ENV.NormalLightingSettings.Brightness = Lighting.Brightness
+					if not Configs['Fullbright'] then
+						repeat
+							wait()
+						until Configs['Fullbright']
+					end
+					Lighting.Brightness = 1
+				end
+			end)
+
+			Lighting:GetPropertyChangedSignal("ClockTime"):Connect(function()
+				if Lighting.ClockTime ~= 12 and Lighting.ClockTime ~= _ENV.NormalLightingSettings.ClockTime then
+					_ENV.NormalLightingSettings.ClockTime = Lighting.ClockTime
+					if not Configs['Fullbright'] then
+						repeat
+							wait()
+						until Configs['Fullbright']
+					end
+					Lighting.ClockTime = 12
+				end
+			end)
+
+			Lighting:GetPropertyChangedSignal("FogEnd"):Connect(function()
+				if Lighting.FogEnd ~= 786543 and Lighting.FogEnd ~= _ENV.NormalLightingSettings.FogEnd then
+					_ENV.NormalLightingSettings.FogEnd = Lighting.FogEnd
+					if not Configs['Fullbright'] then
+						repeat
+							wait()
+						until Configs['Fullbright']
+					end
+					Lighting.FogEnd = 786543
+				end
+			end)
+
+			Lighting:GetPropertyChangedSignal("GlobalShadows"):Connect(function()
+				if Lighting.GlobalShadows ~= false and Lighting.GlobalShadows ~= _ENV.NormalLightingSettings.GlobalShadows then
+					_ENV.NormalLightingSettings.GlobalShadows = Lighting.GlobalShadows
+					if not Configs['Fullbright'] then
+						repeat
+							wait()
+						until Configs['Fullbright']
+					end
+					Lighting.GlobalShadows = false
+				end
+			end)
+
+			Lighting:GetPropertyChangedSignal("Ambient"):Connect(function()
+				if Lighting.Ambient ~= Color3.fromRGB(178, 178, 178) and Lighting.Ambient ~= _ENV.NormalLightingSettings.Ambient then
+					_ENV.NormalLightingSettings.Ambient = Lighting.Ambient
+					if not Configs['Fullbright'] then
+						repeat
+							wait()
+						until Configs['Fullbright']
+					end
+					Lighting.Ambient = Color3.fromRGB(178, 178, 178)
+				end
+			end)
+
+			Lighting.Brightness = 1
+			Lighting.ClockTime = 12
+			Lighting.FogEnd = 786543
+			Lighting.GlobalShadows = false
+			Lighting.Ambient = Color3.fromRGB(178, 178, 178)
+
+			local LatestValue = true
+			Thread.__function['@connection'](0, function()
+				if Configs['Fullbright'] ~= LatestValue then
+					if not Configs['Fullbright'] then
+						Lighting.Brightness = _ENV.NormalLightingSettings.Brightness
+						Lighting.ClockTime = _ENV.NormalLightingSettings.ClockTime
+						Lighting.FogEnd = _ENV.NormalLightingSettings.FogEnd
+						Lighting.GlobalShadows = _ENV.NormalLightingSettings.GlobalShadows
+						Lighting.Ambient = _ENV.NormalLightingSettings.Ambient
+					else
+						Lighting.Brightness = 1
+						Lighting.ClockTime = 12
+						Lighting.FogEnd = 786543
+						Lighting.GlobalShadows = false
+						Lighting.Ambient = Color3.fromRGB(178, 178, 178)
+					end
+					LatestValue = not LatestValue
+				end
+			end, true)
+		end)
+		
+		Thread.__library['@init'] = (function()
+			if Configs['X'] == 0 and Configs['Y'] == 0 then
+				if _MT['UserInputService'].KeyboardEnabled then
+					return UDim2.new(0, 750, 0, 800)
+				else
+					return UDim2.new(0, 500, 0, 350)
+				end
+			else
+				return UDim2.new(0, Configs['X'], 0, Configs['Y'])
+			end
+		end)
+		
+		Thread.__configs['def']('X', 0)
+		Thread.__configs['def']('Y', 0)
+		
+		repeat wait() until game:GetService("CoreGui").lnwza.Background
+
+		do
+			game:GetService("CoreGui").lnwza.Background:GetPropertyChangedSignal("Size"):Connect(function()
+				local size = game:GetService("CoreGui").lnwza.Background.Size
+				Thread.__configs['save']('X', size.X.Offset)
+				Thread.__configs['save']('X', size.X.Offset)
+			end)
+		end
 	end)()
 
 	Thread.__game['@mains'] = (function()
@@ -618,9 +901,12 @@ local Modules = {} do
 			return Module
 		end
 	end)
+	
+	
 end
 
 do
+	
 	LocalPlayer.CharacterAdded:Connect(function(_Character: Instance)
 		Character = _Character
 		Humanoid = _Character:WaitForChild('Humanoid')
@@ -638,7 +924,7 @@ do
 	LocalPlayer.OnTeleport:Connect(function(State)
 		if Configs['Keep Script'] and (not TeleportCheck) and _ENV.queueonteleport then
 			TeleportCheck = true
-			--_ENV.queueonteleport("loadstring(game:HttpGet('https://github.com/96soul/-/blob/main/load.gg?raw=true', true))()")
+			queueonteleport("loadstring(game:HttpGet('https://github.com/96soul/-/blob/main/load.gg?raw=true', true))()")
 		end
 	end)
 end
