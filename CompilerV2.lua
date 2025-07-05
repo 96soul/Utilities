@@ -367,7 +367,7 @@ local Thread = Dictionary({
 				Value = Configs[SettingName],
 				CallBack = (function(value)
 					Configs[SettingName] = value
-					Thread.__configs['save'](SettingName, Configs[SettingName] or value)
+					Thread.__configs['save'](SettingName, value)
 					if CallBackz ~= nil then CallBackz(value) end
 					if breakfun ~= nil and not value then breakfun() end
 				end)
@@ -389,13 +389,17 @@ local Thread = Dictionary({
 				Icon = Icon,
 				CallBack = (function(value)
 					Configs[SettingName] = value
-					Thread.__configs['save'](SettingName, Configs[SettingName] or value)
-					if CallBackz ~= nil then CallBackz() end
+					Thread.__configs['save'](SettingName, value)
+					if CallBackz ~= nil then CallBackz(value) end
 					if breakfun ~= nil and not value then breakfun() end
 				end)
 			}
 			if FunctionTree[SettingName] then
-				Thread.__functions['@connection'](0.1, function() FunctionTree[SettingName]() end)
+				Thread.__functions['@connection'](0.1, function()
+					if Configs[SettingName] then
+						FunctionTree[SettingName]()
+					end
+				end)
 			end
 			return Tab:Toggle(Options)
 		end)
@@ -410,13 +414,28 @@ local Thread = Dictionary({
 		Thread.__library['@setup'] = (function(window: table)
 			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
-					Thread.__library['@toggle'](Performance, translate("Enable White Screen", "เปิดใช้งานจอขาว"), "White Screen" ,nil, function(v)
-						if v then
-							RunService:Set3dRenderingEnabled(false)
-						else
-							RunService:Set3dRenderingEnabled(true)
+					Thread.__library['@toggle'](
+						Performance,               -- Tab UI ที่ต้องการเพิ่ม Toggle เข้าไป
+						"Auto Farm",       -- ชื่อหัวข้อใน UI
+						"AutoFarmEnabled", -- ชื่อตัวแปร config ที่ใช้เก็บสถานะ
+						nil,
+						function(state)    -- CallBackz (จะถูกเรียกทุกครั้งที่ toggle เปลี่ยนค่า)
+							print("Auto Farm:", state and "ON" or "OFF")
 						end
-					end)
+					)
+					Thread.__library['@toggle'](
+						Performance,
+						translate("Enable White Screen", "เปิดใช้งานจอขาว"),
+						"White Screen",
+						nil,
+						function(v)
+							if v then
+								RunService:Set3dRenderingEnabled(false)
+							else
+								RunService:Set3dRenderingEnabled(true)
+							end
+						end
+					)
 					Thread.__library['@toggle'](Performance, translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), 'Fullbright')
 					Thread.__library['@button'](Performance,translate("Boost FPS", "แก้แลค"), function()
 						pcall(function()
