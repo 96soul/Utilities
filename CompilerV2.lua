@@ -513,24 +513,25 @@ local Thread = Dictionary({
 						Thread.__configs['save']('Select Player', v)
 					end})
 
-					Thread.__library['@button']({Title = translate("Refresh", "รีเฟรช"), Callback = function()
+					Thread.__library['@button'](PlayersSS ,translate("Refresh", "รีเฟรช"), function()
 						PlayerDropdown:Clear()
 						for _, v in pairs(Players:GetPlayers()) do
 							if v ~= LocalPlayer and v.Character then
 								PlayerDropdown:AddList(v.Name)
 							end
 						end
-					end})
+					end)
 
-					Thread.__library['@button']({Title = translate("Teleport", "เทเลพอร์ต"), Callback = function()
+					Thread.__library['@button'](PlayersSS, translate("Teleport", "เทเลพอร์ต"), function()
 						pcall(function()
 							local player = Players:FindFirstChild(Configs["Select Player"])
 							if player and player.Character then
 								Thread.__function['@tp'](player.Character)
 							end
 						end)
-					end})
-					Thread.__library['@toggle'](PlayersSS, translate("View Player", "ดูผู้เล่น"), 'View Player',nil, function(v)
+					end)
+					
+					Thread.__library['@toggle']({sec = PlayersSS,title = translate("View Player", "ดูผู้เล่น"),setting = "View Player",call = function(v)
 						if v then
 							local player = Players:FindFirstChild(Configs["Select Player"])
 							if player and player.Character then
@@ -539,7 +540,7 @@ local Thread = Dictionary({
 						else
 							workspace.CurrentCamera.CameraSubject = Humanoid
 						end
-					end)
+					end})
 				end
 
 				local Power = Home:Sec({Title = translate("Powers", "ความสามารถพิเศษ"), Side = "r"}) do
