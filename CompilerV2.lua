@@ -383,17 +383,13 @@ local Thread = Dictionary({
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
-					Callback = (function(value)
+					Callback = function(value)
 						Configs[Setting] = value
 						Thread.__configs['save'](Setting, value)
 						if Callback ~= "" then 
-							if IsProtect then
-								pcall(Callback, value)
-							else
-								Callback(value)
-							end
+							Callback(value)
 						end
-					end)
+					end
 				}
 
 				return Section:Toggle(Options)
@@ -414,11 +410,7 @@ local Thread = Dictionary({
 						Configs[Setting] = value
 						Thread.__configs['save'](Setting, value)
 						if Callback ~= "" then 
-							if IsProtect then
-								pcall(Callback, value)
-							else
-								Callback(value)
-							end
+							Callback(value)
 						end
 					end)
 				}
