@@ -618,4 +618,4 @@ do
 	end
 end
 
-return table.unpack({_env;_game;_library;Configs;Indexing;translate;LocalPlayer;PlayerGui;PlayerScripts;Character;HumanoidRootPart;Humanoid;})
+return table.unpack({_env;_game;_library;Module;Configs;Indexing;translate;LocalPlayer;PlayerGui;PlayerScripts;Character;HumanoidRootPart;Humanoid;})
