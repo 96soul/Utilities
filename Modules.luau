@@ -632,7 +632,7 @@ do
 			}
 
 			Module[2].GetFarm = require(ReplicatedStorage.Modules.GetFarm)
-			farm = Module.GetFarm(LocalPlayer)
+			farm = Module[2].GetFarm(LocalPlayer)
 			Plant_Locations = farm.Important.Plant_Locations
 			Plants_Physical = farm.Important.Plants_Physical
 
@@ -818,4 +818,4 @@ do
 	end
 end
 
-return table.unpack({_env;_game;_library;Module;Configs;Indexing;translate;LocalPlayer;PlayerGui;PlayerScripts;Character;HumanoidRootPart;Humanoid;})
+return table.unpack({_env;_game;_library;Module;Configs;Indexing;translate;LocalPlayer;PlayerGui;PlayerScripts;Backpack;Character;HumanoidRootPart;Humanoid;})
