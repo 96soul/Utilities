@@ -916,8 +916,8 @@ do
 
 	LocalPlayer.CharacterAdded:Connect(function(_Character: Instance)
 		Character = _Character
-		Humanoid = _Character:WaitForChild('Humanoid')
-		HumanoidRootPart = _Character:WaitForChild('HumanoidRootPart')
+		Humanoid = _Character:FindFirstChild('Humanoid')
+		HumanoidRootPart = _Character:FindFirstChild('HumanoidRootPart')
 		PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
 		Backpack = LocalPlayer:WaitForChild("Backpack")
 	end)
@@ -947,5 +947,6 @@ return table.unpack({
 	LocalPlayer,
 	HumanoidRootPart,
 	Humanoid,
-	Indexing
+	Indexing,
+	Character
 })
