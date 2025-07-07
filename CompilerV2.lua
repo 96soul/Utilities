@@ -31,6 +31,7 @@ local PlaceId = game['PlaceId']
 local JobId = game['JobId']
 
 local Configs = {}
+local Indexing = {}
 local Folder: string = "Fetching'Script/Config/" .. LocalPlayer.UserId .. "/" .. PlaceId .. ".json"
 
 function Dictionary(array: { string }, value: any?): { [string]: any? }
@@ -371,15 +372,18 @@ local Thread = Dictionary({
 			local Callback: func = meta.call or ""
 			local IsProtect: boolean = meta.pcall or false
 
-			if Icon == "" then
-				if Function ~= "" then
-					Thread.__function['@connection'](Delay, function()
-						if Configs[Setting] then
-							Function()
-						end
-					end, IsProtect)
+			if Function ~= "" then
+				if not Indexing[Setting] then
+					table.insert(Indexing, Setting)
 				end
+				Thread.__function['@connection'](Delay, function()
+					if Configs[Setting] then
+						Function()
+					end
+				end, IsProtect)
+			end
 
+			if Icon == "" then
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
@@ -394,14 +398,6 @@ local Thread = Dictionary({
 
 				return Section:Toggle(Options)
 			else
-				if Function ~= "" then
-					Thread.__function['@connection'](Delay, function()
-						if Configs[Setting] then
-							Function()
-						end
-					end, IsProtect)
-				end
-
 				local Options: table = {
 					Title = Title,
 					Value = Configs[Setting],
@@ -951,4 +947,5 @@ return table.unpack({
 	LocalPlayer,
 	HumanoidRootPart,
 	Humanoid,
+	Indexing
 })
