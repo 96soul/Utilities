@@ -338,14 +338,14 @@ do
 		function Module:setup(window: table)
 			local Home = window:Add({Title = translate("Configs", "คอนฟิก"),Desc = translate("Global Settings", "การตั้งค่าหลัก"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
-					Module[1].toggle({sec = Performance,title = translate("Enable White Screen", "เปิดใช้งานจอขาว"),setting = "White Screen",call = function(v)
+					Module[1].toggle({sec = Performance,title = translate("Enable White Screen", "เปิดใช้งานจอขาว"),setting = "White Screen", index = false,call = function(v)
 						if v then
 							RunService:Set3dRenderingEnabled(false)
 						else
 							RunService:Set3dRenderingEnabled(true)
 						end
 					end})
-					Module[1].toggle({sec = Performance,title = translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"),setting = "Fullbright"})
+					Module[1].toggle({sec = Performance,title = translate("Enable Fullbright", "เปิดใช้งานแสงสว่าง"), index = false,setting = "Fullbright"})
 					Module[1].button(Performance,translate("Boost FPS", "แก้แลค"), function()
 						pcall(function()
 							local Terrain = workspace:FindFirstChildOfClass('Terrain')
@@ -431,7 +431,7 @@ do
 						end)
 					end)
 
-					Module[1].toggle({sec = PlayersSS,title = translate("View Player", "ดูผู้เล่น"),setting = "View Player",call = function(v)
+					Module[1].toggle({sec = PlayersSS,title = translate("View Player", "ดูผู้เล่น"),setting = "View Player", index = false,call = function(v)
 						if v then
 							local player = Players:FindFirstChild(Configs["Select Player"])
 							if player and player.Character then
@@ -493,7 +493,7 @@ do
 
 				local Config = Home:Sec({Title = translate("Configs", "การตั้งค่า"), Side = "r"}) do
 					Module[1].def('Lauguage', 'English [ Default ]')
-					Module[1].toggle({sec = Config,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"),setting = "Keep Script"})
+					Module[1].toggle({sec = Config,title = translate("Keep Script", "ออโต้รันสคริปต์ [ บางครั้งก็ไม่ติด ]"), index = false,setting = "Keep Script"})
 					Module[1].list(Config, translate("Lauguage", 'เลือกภาษา'), {'Thailand', 'English [ Default ]'}, false, 'Lauguage')
 					Module[1].button(Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
 						Module[1].rj()
