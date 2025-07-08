@@ -262,14 +262,17 @@ do
 			if not Section then return "No Section" end
 			local Delay: number = meta.delay or 0.1
 			local Title: string = meta.title or "Toggle"
+			local Index: boolean = meta.index or true
 			local Icon: number = meta.icon or ""
 			local Setting: string = meta.setting or ""
 			local Function: func = meta.self or ""
 			local Callback: func = meta.call or ""
 
 			if Function ~= "" then
-				if not Indexing[Setting] then
-					table.insert(Indexing, Setting)
+				if Index then
+					if not Indexing[Setting] then
+						table.insert(Indexing, Setting)
+					end
 				end
 				Module[1].connect(Delay, function()
 					if Configs[Setting] then
@@ -333,7 +336,7 @@ do
 		end)
 		
 		function Module:setup(window: table)
-			local Home = window:Add({Title = translate("Other", "อื่นๆ"),Desc = translate("Miscellaneous", "ฟังชั่นอื่นๆ"),Icon = 81707063924327}) do
+			local Home = window:Add({Title = translate("Configs", "คอนฟิก"),Desc = translate("Global Settings", "การตั้งค่าหลัก"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
 					Module[1].toggle({sec = Performance,title = translate("Enable White Screen", "เปิดใช้งานจอขาว"),setting = "White Screen",call = function(v)
 						if v then
