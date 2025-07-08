@@ -336,7 +336,7 @@ do
 		end)
 		
 		function Module:setup(window: table)
-			local Home = window:Add({Title = translate("Configs", "คอนฟิก"),Desc = translate("Global Settings", "การตั้งค่าหลัก"),Icon = 81707063924327}) do
+			local Home = window:Add({Title = translate("Configs", "คอนฟิก"),Desc = translate("Globals", "การตั้งค่าหลัก"),Icon = 81707063924327}) do
 				local Performance = Home:Sec({Title = translate("Performance", "ประสิทธิภาพ"), Side = "l"}) do
 					Module[1].toggle({sec = Performance,title = translate("Enable White Screen", "เปิดใช้งานจอขาว"),setting = "White Screen", index = false,call = function(v)
 						if v then
