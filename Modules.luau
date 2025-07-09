@@ -518,11 +518,16 @@ do
 					Module[1].button(Config, translate("Change Lauguage", "เปลี่ยนภาษา"), function()
 						Module[1].rj()
 					end)
+					Config:Line()
 					Module[1].button(Config, translate("Reset Configs", "ลบการตั้งค่า"), function()
 						delfile(Folder)
 					end)
 					Module[1].button(Config, translate("Reset All Configs", "ลบการตั้งค่าทั้งหมด"), function()
-						delfile("Fetching'Script")
+						if isfile("Fetching'Script/Config/" .. LocalPlayer.UserId) then
+							delfile("Fetching'Script/Config/" .. LocalPlayer.UserId)
+						else
+							warn("Configs is Delete")
+						end
 					end)
 				end
 			end
