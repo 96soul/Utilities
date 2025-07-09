@@ -521,6 +521,9 @@ do
 					Module[1].button(Config, translate("Reset Configs", "ลบการตั้งค่า"), function()
 						delfile(Folder)
 					end)
+					Module[1].button(Config, translate("Reset All Configs", "ลบการตั้งค่าทั้งหมด"), function()
+						delfile("Fetching'Script")
+					end)
 				end
 			end
 
