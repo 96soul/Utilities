@@ -9,6 +9,8 @@ end
 local _env: ENVIRONMENT = (getgenv or getrenv or getfenv)()
 local _game: Game = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
 local _library: Set = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
+if _env._request then return end
+_env._request = true
 
 local VirtualInputManager: VirtualInputManager = _game["VirtualInputManager"]
 local CollectionService: CollectionService = _game["CollectionService"]
@@ -646,6 +648,9 @@ do
 	
 	Module[2] = {} do
 		if PlaceId == 2753915549 or PlaceId == 4442272183 or PlaceId == 7449423635 then
+			repeat 
+				task.wait()
+			until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.PlayerGui and game:GetService("Players").LocalPlayer.Backpack and game:GetService("Players").LocalPlayer.PlayerScripts and game:GetService("Players").LocalPlayer.Team and game:GetService("Players").LocalPlayer.Data and game:GetService("Players").LocalPlayer.Data.Level and game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_")
 			do
 				local Remotes = _game['ReplicatedStorage']:WaitForChild("Remotes")
 				local CommF = Remotes:WaitForChild("CommF_")
