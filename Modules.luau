@@ -178,7 +178,7 @@ do
 				gradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0, MainColor), ColorSequenceKeypoint.new(1, DropColor)})
 			else
 				if v:IsA("Model") then
-					v:FindFirstChild('Constant'):FindFirstChild("TextLabel").Text = title .. '\n[ ' .. math.floor(tonumber((HumanoidRootPart.Position - v.Position).Magnitude / 3) + 1) .. ' ]'
+					v:FindFirstChild('Constant'):FindFirstChild("TextLabel").Text = title .. '\n[ ' .. math.floor(tonumber((HumanoidRootPart.Position - v:GetPivot().Position).Magnitude / 3) + 1) .. ' ]'
 				elseif v:IsA("BasePart") then
 					v:FindFirstChild('Constant'):FindFirstChild("TextLabel").Text = title .. '\n[ ' .. math.floor(tonumber((HumanoidRootPart.Position - v.Position).Magnitude / 3) + 1) .. ' ]'
 				end
