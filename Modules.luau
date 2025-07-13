@@ -36,12 +36,10 @@ local Configs: Set = {}
 local Indexing: Set = {}
 local Folder: string = "Fetching'Script/Config/" .. LocalPlayer.UserId .. "/" .. PlaceId .. ".json"
 
-LocalPlayer.CharacterAdded:Connect(function(_Character: Model)
-	Character = _Character
-	Humanoid = _Character:FindFirstChild('Humanoid')
-	HumanoidRootPart = _Character:FindFirstChild('HumanoidRootPart')
-	PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts")
-	Backpack = LocalPlayer:WaitForChild("Backpack")
+LocalPlayer.CharacterAdded:Connect(function(newCharacter)
+	Character = newCharacter
+	HumanoidRootPart = newCharacter:WaitForChild("HumanoidRootPart")
+	Humanoid = newCharacter:WaitForChild("Humanoid")
 end)
 
 LocalPlayer.Idled:Connect(function()
@@ -821,7 +819,7 @@ do
 				end
 
 				Module[2].tp = function(Position)
-					if not Character or not HumanoidRootPart then return end
+					if not Character then return end
 					local Distance = (Position.Position - HumanoidRootPart.Position).Magnitude
 					local Position = CFrame.new(math.floor(Position.Position.X), math.floor(Position.Position.Y), math.floor(Position.Position.Z))
 					if not HumanoidRootPart:FindFirstChild("GGEZ") then
@@ -831,43 +829,28 @@ do
 						BodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
 						BodyVelocity.Velocity = Vector3.new(0, 0, 0)
 					end
-					if not Character:FindFirstChild("Smoothing") then
-						local Root = Instance.new("Part")
-						Root.Size = Vector3.new(10, 1, 10)
-						Root.Name = "Smoothing"
-						Root.Anchored = true
-						Root.Transparency = 1
-						Root.CanCollide = false
-						Root.CFrame = HumanoidRootPart.CFrame
-						Root.Parent = Character
-						Root:GetPropertyChangedSignal("CFrame"):Connect(function()
-							task.wait()
-							HumanoidRootPart.CFrame = Root.CFrame
-						end)
-					end
-					local Smoothing = Character:FindFirstChild("Smoothing")
-					if not Smoothing then return end
-					local Duration = Distance / 300
-					if Distance > 0 and Distance < 300 then
-						Duration = Distance / 650
-					end
-					local tw = _game['TweenService']:Create(Smoothing, TweenInfo.new(Duration, Enum.EasingStyle.Linear), {CFrame = Position})
-					function StopTween()
-						if tw then tw:Cancel() end
-						if Smoothing then Smoothing:Destroy() end
-					end
-					if not Configs['Prehistoric - Find'] or not Configs['Kitsune Shrine - Find'] or not Configs['Mirage - Find'] or not Configs['Frozen Gate - Find'] or not Configs['Full Sea Events'] then
-						if Humanoid.Sit then Humanoid.Sit = false end
-					end
+					local Distance = (Position.Position - HumanoidRootPart.Position).Magnitude
 					for _, v in pairs(Character:GetChildren()) do
 						if v:IsA("BasePart") then
 							v.CanCollide = false
 						end
 					end
 					Humanoid.PlatformStand = true
-					Smoothing.CFrame = CFrame.new(HumanoidRootPart.Position.X, Position.Position.Y, HumanoidRootPart.Position.Z)
-					if Configs['Cake Prince'] or Configs["Performance Farm"] then task.wait(0.5) end
-					tw:Play()
+					if not Configs['Prehistoric - Find'] or not Configs['Kitsune Shrine - Find'] or not Configs['Mirage - Find'] or not Configs['Frozen Gate - Find'] or not Configs['Full Sea Events'] then
+						if Humanoid.Sit then Humanoid.Sit = false end
+					end
+					if Configs["Performance Farm"] then task.wait(0.5) end
+					if Distance > 0 and Distance < 300 then
+						return _game.TweenService:Create(HumanoidRootPart,TweenInfo.new(0.08, Enum.EasingStyle.Linear),{CFrame = Position}):Play()
+					else
+						local tw = _game.TweenService:Create(HumanoidRootPart,TweenInfo.new(Distance / 300, Enum.EasingStyle.Linear),{CFrame = Position})
+						function StopTween()
+							if tw then
+								tw:Cancel()
+							end
+						end
+						return tw:Play()
+					end
 				end
 
 				Module[2].TweenShip = function(v, Position)
@@ -1382,10 +1365,6 @@ do
 							}
 						elseif Level >= 375 and Level <= 399 then
 							if (Vector3.new(61122.65234375, 18.497442245483, 1569.3997802734) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(61122.65234375, 18.497442245483, 1569.3997802734)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
 							end
 							return {
@@ -1396,10 +1375,6 @@ do
 							}
 						elseif Level >= 400 and Level <= 449 then
 							if (Vector3.new(61122.65234375, 18.497442245483, 1569.3997802734) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(61122.65234375, 18.497442245483, 1569.3997802734)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
 							end
 							return {
@@ -1410,10 +1385,6 @@ do
 							}
 						elseif Level >= 450 and Level <= 474 then
 							if (Vector3.new(-7859.09814, 5544.19043, -381.476196) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(-7859.09814, 5544.19043, -381.476196)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
 							end
 							return {
@@ -1424,10 +1395,6 @@ do
 							}
 						elseif Level >= 475 and Level <= 524 then
 							if (Vector3.new(-7863, 5545, -378) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(-7863, 5545, -378)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
 							end
 							return {
@@ -1438,10 +1405,6 @@ do
 							}
 						elseif Level >= 525 and Level <= 549 then
 							if (Vector3.new(-7906.81592, 5634.6626, -1411.99194) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(-7906.81592, 5634.6626, -1411.99194)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
 							end
 							return {
@@ -1452,10 +1415,6 @@ do
 							}
 						elseif Level >= 550 and Level <= 624 then
 							if (Vector3.new(-7906.81592, 5634.6626, -1411.99194) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(-7906.81592, 5634.6626, -1411.99194)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
 							end
 							return {
@@ -1580,10 +1539,6 @@ do
 							}
 						elseif Level >= 1250 and Level <= 1274 then
 							if (Vector3.new(1037.80127, 125.092171, 32911.6016) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(1037.80127, 125.092171, 32911.6016)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
 							end
 							return {
@@ -1594,10 +1549,6 @@ do
 							}
 						elseif Level >= 1275 and Level <= 1299 then
 							if (Vector3.new(1037.80127, 125.092171, 32911.6016) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(1037.80127, 125.092171, 32911.6016)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
 							end
 							return {
@@ -1608,10 +1559,6 @@ do
 							}
 						elseif Level >= 1300 and Level <= 1324 then
 							if (Vector3.new(968.80957, 125.092171, 33244.125) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(968.80957, 125.092171, 33244.125)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
 							end
 							return {
@@ -1622,10 +1569,6 @@ do
 							}
 						elseif Level >= 1325 and Level <= 1349 then
 							if (Vector3.new(968.80957, 125.092171, 33244.125) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(968.80957, 125.092171, 33244.125)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
 							end
 							return {
@@ -1636,10 +1579,6 @@ do
 							}
 						elseif Level >= 1350 and Level <= 1374 then
 							if (Vector3.new(5667.6582, 26.7997818, -6486.08984) - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 20000 then
-								if Smoothing then
-									Smoothing.Position = Vector3.new(-6508.55810546875, 89.03500366210938, -132.83999633789062)
-									task.wait(1.5)
-								end
 								game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.55810546875, 89.03500366210938, -132.83999633789062))
 							end
 							return {
