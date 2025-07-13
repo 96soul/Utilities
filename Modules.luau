@@ -836,7 +836,7 @@ do
 						end
 					end
 					Humanoid.PlatformStand = true
-					if not Configs['Prehistoric - Find'] or not Configs['Kitsune Shrine - Find'] or not Configs['Mirage - Find'] or not Configs['Frozen Gate - Find'] or not Configs['Full Sea Events'] then
+					if not Configs['Prehistoric - Find'] or not Configs['Kitsune Shrine - Find'] or not Configs['Mirage - Find'] or not Configs['Frozen Gate - Find'] or not Configs['Full Sea Events'] or not Configs['GS Hunt'] or not Configs['SB Hunt'] then
 						if Humanoid.Sit then Humanoid.Sit = false end
 					end
 					if Configs["Performance Farm"] then task.wait(0.5) end
@@ -852,7 +852,7 @@ do
 						return tw:Play()
 					end
 				end
-
+				
 				Module[2].TweenShip = function(v, Position)
 					if not v:IsA("Model") and not (v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0) then return end
 					local seat = v:FindFirstChild("VehicleSeat")
@@ -887,6 +887,10 @@ do
 						end 
 					end 
 					return false 
+				end
+				
+				Module[2].stopship = function()
+					pcall(StopTween)
 				end
 
 				Module[1].connect(0, function()
@@ -2057,6 +2061,7 @@ do
 					else
 						if Ship then
 							if not Humanoid.Sit then
+								Module[2].stopship()
 								if (Ship.VehicleSeat.Position - HumanoidRootPart.Position).Magnitude < 50 then
 									Module[2].tp(Ship.VehicleSeat.CFrame)
 								else
