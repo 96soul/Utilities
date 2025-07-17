@@ -9,6 +9,8 @@ end
 local _env: ENVIRONMENT = (getgenv or getrenv or getfenv)()
 local _game: GetService = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
 local _library: Set = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
+if _env._request then return end
+_env._request = true
 
 local VirtualInputManager: VirtualInputManager = _game["VirtualInputManager"]
 local CollectionService: CollectionService = _game["CollectionService"]
@@ -2026,18 +2028,18 @@ do
 					return name
 				end
 
-				Module[2].Myboat = function(a)
+				Module[2].Myboat = function()
 					local boat = nil
 					local dis = 3500
 					for _, v in pairs(workspace.Boats:GetChildren()) do
-						if v:IsA("Model") and v.Name == a then
+						if v:GetAttribute("IsBoat") then
 							local owner = v:FindFirstChild("Owner")
-							if owner and owner:IsA("ObjectValue") and owner.Value then
-								local ownerName = tostring(owner.Value)
+							if owner and owner:IsA("ObjectValue") and tostring(owner.Value) == LocalPlayer.Name then
 								local distance = (v:GetPivot().Position - HumanoidRootPart.Position).Magnitude
-								if ownerName == LocalPlayer.Name and distance <= dis then
+								if distance <= dis then
 									boat = v
 									dis = distance
+									print(v.Name)
 								end
 							end
 						end
