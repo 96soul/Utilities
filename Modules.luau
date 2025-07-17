@@ -7,7 +7,7 @@ if game['CoreGui']:FindFirstChild('lnwza') then
 end
 
 local _env: ENVIRONMENT = (getgenv or getrenv or getfenv)()
-local _game: Game = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
+local _game: GetService = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
 local _library: Set = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
 if _env._request then return end
 _env._request = true
@@ -2039,7 +2039,7 @@ do
 						if v.Name == a then
 							local owner = v:FindFirstChild("Owner")
 							if owner and owner:IsA("ObjectValue") and owner.Value then
-								local ownerName = owner.Value.Name
+								local ownerName = tostring(owner.Value)
 								if ownerName == LocalPlayer.Name and (v:GetPivot().Position - HumanoidRootPart.Position).Magnitude <= 3000 then
 									boat = v
 								end
