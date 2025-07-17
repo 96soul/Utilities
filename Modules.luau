@@ -2028,18 +2028,17 @@ do
 					return name
 				end
 
-				Module[2].Myboat = function()
+				Module[2].Myboat = function(v)
 					local boat = nil
 					local dis = 3500
 					for _, v in pairs(workspace.Boats:GetChildren()) do
-						if v:GetAttribute("IsBoat") then
+						if v:GetAttribute("IsBoat") and tostring(v) == tostring(LocalPlayer.Name) then
 							local owner = v:FindFirstChild("Owner")
 							if owner and owner:IsA("ObjectValue") and tostring(owner.Value) == LocalPlayer.Name then
 								local distance = (v:GetPivot().Position - HumanoidRootPart.Position).Magnitude
 								if distance <= dis then
 									boat = v
 									dis = distance
-									print(v.Name)
 								end
 							end
 						end
