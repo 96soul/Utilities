@@ -2,15 +2,17 @@ repeat
 	task.wait()
 until game:IsLoaded() and game:GetService("Players") and game:GetService("Players").LocalPlayer
 
+
+
+local _env: ENVIRONMENT = (getgenv or getrenv or getfenv)()
+if _env._request then return end
+_env._request = true
+local _game: GetService = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
+local _library: Set = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
+
 if game['CoreGui']:FindFirstChild('lnwza') then
 	game['CoreGui']:FindFirstChild('lnwza'):Destroy()
 end
-
-local _env: ENVIRONMENT = (getgenv or getrenv or getfenv)()
-local _game: GetService = setmetatable({}, {__index = function(_, key) return cloneref(game:GetService(key))end})
-local _library: Set = loadstring(game:HttpGet("https://raw.githubusercontent.com/96soul/Library/refs/heads/main/Main", true))()
-if _env._request then return end
-_env._request = true
 
 local VirtualInputManager: VirtualInputManager = _game["VirtualInputManager"]
 local CollectionService: CollectionService = _game["CollectionService"]
